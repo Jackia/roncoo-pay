@@ -89,6 +89,7 @@ public class RoncooPayController  extends BaseController{
             /////签名及生成请求API的方法///
             String sign = MerchantApiUtil.getSign(paramMap, PayConfigUtil.readConfig("paySecret"));
             paramMap.put("sign",sign);
+            System.out.println("sign======" + sign);
 
             String buildRequest = MerchantApiUtil.buildRequest(paramMap, "get", "确定" ,PayConfigUtil.readConfig("scanPayUrl"));
 

@@ -2,7 +2,7 @@ package com.roncoo.pay.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.roncoo.pay.common.core.utils.DateUtils;
-import com.roncoo.pay.controller.common.BaseController;
+import com.roncoo.pay.controller.common.BaseController2;
 import com.roncoo.pay.trade.exception.TradeBizException;
 import com.roncoo.pay.trade.service.RpTradePaymentManagerService;
 import com.roncoo.pay.trade.utils.MerchantApiUtil;
@@ -32,7 +32,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/f2fPay")
-public class F2FPayController extends BaseController {
+public class F2FPayController extends BaseController2 {
     private static final Logger LOG = LoggerFactory.getLogger(F2FPayController.class) ;
 
     @Autowired

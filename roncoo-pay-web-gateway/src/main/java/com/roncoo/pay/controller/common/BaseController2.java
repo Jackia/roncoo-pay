@@ -43,9 +43,9 @@ import java.util.Set;
  * @author  Peter
  * <a href="http://www.roncoo.com">龙果学院(www.roncoo.com)</a>
  */
-public abstract class BaseController {
+public abstract class BaseController2 {
 
-    private static final Log log = LogFactory.getLog(BaseController.class);
+    private static final Log log = LogFactory.getLog(BaseController2.class);
     
 	private static final String UTF_8 = "utf-8";
 
@@ -178,7 +178,7 @@ public abstract class BaseController {
 			if (StringUtil.isEmpty(string)){
 				return null;
 			}else{
-				return new String(getString(string).getBytes("GBK"), "UTF-8");
+				return new String(string.getBytes("GBK"), "UTF-8");
 			}
 		} catch (Exception e) {
 			log.error("参数转码错误:",e);
@@ -186,6 +186,21 @@ public abstract class BaseController {
 		}
 
 	}
+	
+	public String getString_UrlDecode_ISO(String key) {
+        try {
+            String string = getString(key.toString());
+            if (StringUtil.isEmpty(string)){
+                return null;
+            }else{
+                return new String(string.getBytes("ISO-8859-1"), "UTF-8");
+            }
+        } catch (Exception e) {
+            log.error("参数转码错误:",e);
+            return "";
+        }
+
+    }
 
 	/**
 	 * 获取客户端的IP地址

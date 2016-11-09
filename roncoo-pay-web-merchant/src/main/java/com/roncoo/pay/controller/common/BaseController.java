@@ -35,6 +35,8 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.roncoo.pay.common.core.utils.StringUtil;
+
 /**
  * controller基类
  * 
@@ -191,6 +193,20 @@ public abstract class BaseController {
 		}
 
 	}
+	
+	public String getString_UrlDecode_ISO(String key) {
+        try {
+            String string = getString(key.toString());
+            if (StringUtil.isEmpty(string)){
+                return null;
+            }else{
+                return new String(getString(string).getBytes("ISO-8859-1"), "UTF-8");
+            }
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
 
 	/**
 	 * 获取客户端的IP地址

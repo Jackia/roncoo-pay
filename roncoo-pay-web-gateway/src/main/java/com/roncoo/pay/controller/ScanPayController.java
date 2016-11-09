@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.roncoo.pay.common.core.enums.PayWayEnum;
 import com.roncoo.pay.common.core.utils.DateUtils;
 import com.roncoo.pay.common.core.utils.StringUtil;
-import com.roncoo.pay.controller.common.BaseController;
+import com.roncoo.pay.controller.common.BaseController2;
 import com.roncoo.pay.trade.exception.TradeBizException;
 import com.roncoo.pay.trade.service.RpTradePaymentManagerService;
 import com.roncoo.pay.trade.service.RpTradePaymentQueryService;
@@ -55,7 +55,7 @@ import com.roncoo.pay.utils.JsonUtils;
  */
 @Controller
 @RequestMapping(value = "/scanPay")
-public class ScanPayController extends BaseController {
+public class ScanPayController extends BaseController2 {
 
 
     @Autowired
@@ -83,41 +83,41 @@ public class ScanPayController extends BaseController {
         Map<String , Object> paramMap = new HashMap<String , Object>();
 
         //获取商户传入参数
-        String payKey = getString_UrlDecode_UTF8("payKey"); // 企业支付KEY
+        String payKey = getString_UrlDecode_ISO("payKey"); // 企业支付KEY
         paramMap.put("payKey",payKey);
-        String productName = getString_UrlDecode_UTF8("productName"); // 商品名称
+        String productName = getString_UrlDecode_ISO("productName"); // 商品名称
         paramMap.put("productName",productName);
-        String orderNo = getString_UrlDecode_UTF8("orderNo"); // 订单编号
+        String orderNo = getString_UrlDecode_ISO("orderNo"); // 订单编号
         paramMap.put("orderNo",orderNo);
-        String orderPriceStr = getString_UrlDecode_UTF8("orderPrice"); // 订单金额 , 单位:元
+        String orderPriceStr = getString_UrlDecode_ISO("orderPrice"); // 订单金额 , 单位:元
         paramMap.put("orderPrice",orderPriceStr);
-        String payWayCode = getString_UrlDecode_UTF8("payWayCode"); // 支付方式编码 支付宝: ALIPAY  微信:WEIXIN
+        String payWayCode = getString_UrlDecode_ISO("payWayCode"); // 支付方式编码 支付宝: ALIPAY  微信:WEIXIN
         paramMap.put("payWayCode",payWayCode);
-        String orderIp = getString_UrlDecode_UTF8("orderIp"); // 下单IP
+        String orderIp = getString_UrlDecode_ISO("orderIp"); // 下单IP
         paramMap.put("orderIp",orderIp);
-        String orderDateStr = getString_UrlDecode_UTF8("orderDate"); // 订单日期
+        String orderDateStr = getString_UrlDecode_ISO("orderDate"); // 订单日期
         paramMap.put("orderDate",orderDateStr);
-        String orderTimeStr = getString_UrlDecode_UTF8("orderTime"); // 订单日期
+        String orderTimeStr = getString_UrlDecode_ISO("orderTime"); // 订单日期
         paramMap.put("orderTime",orderTimeStr);
-        String orderPeriodStr = getString_UrlDecode_UTF8("orderPeriod"); // 订单有效期
+        String orderPeriodStr = getString_UrlDecode_ISO("orderPeriod"); // 订单有效期
         paramMap.put("orderPeriod",orderPeriodStr);
-        String returnUrl = getString_UrlDecode_UTF8("returnUrl"); // 页面通知返回url
+        String returnUrl = getString_UrlDecode_ISO("returnUrl"); // 页面通知返回url
         paramMap.put("returnUrl",returnUrl);
-        String notifyUrl = getString_UrlDecode_UTF8("notifyUrl"); // 后台消息通知Url
+        String notifyUrl = getString_UrlDecode_ISO("notifyUrl"); // 后台消息通知Url
         paramMap.put("notifyUrl",notifyUrl);
-        String remark = getString_UrlDecode_UTF8("remark"); // 支付备注
+        String remark = getString_UrlDecode_ISO("remark"); // 支付备注
         paramMap.put("remark",remark);
-        String sign = getString_UrlDecode_UTF8("sign"); // 签名
+        String sign = getString_UrlDecode_ISO("sign"); // 签名
 
-        String field1 = getString_UrlDecode_UTF8("field1"); // 扩展字段1
+        String field1 = getString_UrlDecode_ISO("field1"); // 扩展字段1
         paramMap.put("field1",field1);
-        String field2 = getString_UrlDecode_UTF8("field2"); // 扩展字段2
+        String field2 = getString_UrlDecode_ISO("field2"); // 扩展字段2
         paramMap.put("field2",field2);
-        String field3 = getString_UrlDecode_UTF8("field3"); // 扩展字段3
+        String field3 = getString_UrlDecode_ISO("field3"); // 扩展字段3
         paramMap.put("field3",field3);
-        String field4 = getString_UrlDecode_UTF8("field4"); // 扩展字段4
+        String field4 = getString_UrlDecode_ISO("field4"); // 扩展字段4
         paramMap.put("field4",field4);
-        String field5 = getString_UrlDecode_UTF8("field5"); // 扩展字段5
+        String field5 = getString_UrlDecode_ISO("field5"); // 扩展字段5
         paramMap.put("field5",field5);
 
         Date orderDate = DateUtils.parseDate(orderDateStr,"yyyyMMdd");
@@ -189,8 +189,8 @@ public class ScanPayController extends BaseController {
     @RequestMapping("orderQuery")
     public void orderQuery(HttpServletResponse httpServletResponse)throws IOException{
 
-        String payKey = getString_UrlDecode_UTF8("payKey"); // 企业支付KEY
-        String orderNO = getString_UrlDecode_UTF8("orderNO"); // 订单号
+        String payKey = getString_UrlDecode_ISO("payKey"); // 企业支付KEY
+        String orderNO = getString_UrlDecode_ISO("orderNO"); // 订单号
 
         OrderPayResultVo payResult = rpTradePaymentQueryService.getPayResult(payKey, orderNO);
         httpServletResponse.setContentType("text/text;charset=UTF-8");
