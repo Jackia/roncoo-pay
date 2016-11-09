@@ -16,11 +16,16 @@
 package com.roncoo.pay.trade.service.impl;
 
 import com.roncoo.pay.account.service.RpAccountTransactionService;
+import com.roncoo.pay.channel.entity.ChannelInfo;
+import com.roncoo.pay.channel.service.ChannelService;
 import com.roncoo.pay.common.core.enums.PayTypeEnum;
 import com.roncoo.pay.common.core.enums.PayWayEnum;
 import com.roncoo.pay.common.core.utils.DateUtils;
 import com.roncoo.pay.common.core.utils.StringUtil;
 import com.roncoo.pay.notify.service.RpNotifyService;
+import com.roncoo.pay.thirdpartypay.xinzhongli.api.XzlPayAPI;
+import com.roncoo.pay.thirdpartypay.xinzhongli.entity.PayInfo;
+import com.roncoo.pay.thirdpartypay.xinzhongli.entity.XzlResponse;
 import com.roncoo.pay.trade.dao.RpTradePaymentOrderDao;
 import com.roncoo.pay.trade.dao.RpTradePaymentRecordDao;
 import com.roncoo.pay.trade.entity.RoncooPayGoodsDetails;
@@ -106,6 +111,9 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
     
     @Autowired
     private AliF2FPaySubmit aliF2FPaySubmit;
+    
+    @Autowired
+    private ChannelService channelService;
     
     /**
      * 初始化直连扫码支付数据,直连扫码支付初始化方法规则 1:根据(商户编号 + 商户订单号)确定订单是否存在 1.1:如果订单存在,抛异常,提示订单已存在 1.2:如果订单不存在,创建支付订单 2:创建支付记录
@@ -790,6 +798,8 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         
         ScanPayResultVo scanPayResultVo = new ScanPayResultVo();
         
+        XzlResponse response = null;
+        
         String payWayCode = payWay.getPayWayCode();// 支付方式
         
         // PayTypeEnum payType = null;
@@ -814,7 +824,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 rpTradePaymentOrder.getOrderAmount(),
                 payWay.getPayWayCode(),
                 payWay.getPayWayName(),
-                PayTypeEnum.getEnum(payWay.getPayWayCode()),
+                PayTypeEnum.getEnum(payWay.getPayTypeCode()),
                 rpTradePaymentOrder.getFundIntoType(),
                 BigDecimal.valueOf(payWay.getPayRate()),
                 rpTradePaymentOrder.getOrderIp(),
@@ -848,54 +858,93 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 mch_id = WeixinConfigUtil.readConfig("mch_id");
                 partnerKey = WeixinConfigUtil.readConfig("partnerKey");
             }else if (FundInfoTypeEnum.XINZHONGLI_RECEIVES.name().equals(rpTradePaymentOrder.getFundIntoType()))
-            {// 平台收款
-                appid = WeixinConfigUtil.readConfig("appId");
-                mch_id = WeixinConfigUtil.readConfig("mch_id");
-                partnerKey = WeixinConfigUtil.readConfig("partnerKey");
+            {// 鑫中利收款
+//                appid = WeixinConfigUtil.readConfig("appId");
+//                mch_id = WeixinConfigUtil.readConfig("mch_id");
+//                partnerKey = WeixinConfigUtil.readConfig("partnerKey");
+                String channelNo = "00000000001";
+                ChannelInfo channelInfo = channelService.listByChannelNo(channelNo);
+                PayInfo payInfo = new PayInfo();
+                String tradeamt = String.valueOf(rpTradePaymentOrder.getOrderAmount());
+                tradeamt = "10";
+                String merchantid = "000000061";
+                
+                String orderid = rpTradePaymentOrder.getMerchantOrderNo();
+                
+                String callbackurl = rpTradePaymentOrder.getReturnUrl();
+                String pay_type = "123";
+                String manualsettle = "1";
+                
+                String orderInfo = rpTradePaymentOrder.getMerchantName();
+                String settlement_type = "130";
+                payInfo.setTradeamt(tradeamt);
+                payInfo.setMerchantid(merchantid);
+                payInfo.setOrderid(orderid);
+                payInfo.setBackurl(callbackurl);
+                payInfo.setCallbackurl(callbackurl);
+                payInfo.setPay_type(pay_type);
+                payInfo.setManualsettle(manualsettle);
+                payInfo.setOrderInfo(orderInfo);
+                payInfo.setSettlement_type(settlement_type);
+                payInfo.setPlatform_code(channelInfo.getPlatform_code());
+                payInfo.setKey(channelInfo.getChannel_key());
+                try
+                {
+                     response = XzlPayAPI.pay(payInfo);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                
             }
             
-            WeiXinPrePay weiXinPrePay =
-                sealWeixinPerPay(appid,
-                    mch_id,
-                    rpTradePaymentOrder.getProductName(),
-                    rpTradePaymentOrder.getRemark(),
-                    rpTradePaymentRecord.getBankOrderNo(),
-                    rpTradePaymentOrder.getOrderAmount(),
-                    rpTradePaymentOrder.getOrderTime(),
-                    rpTradePaymentOrder.getOrderPeriod(),
-                    WeiXinTradeTypeEnum.NATIVE,
-                    rpTradePaymentRecord.getBankOrderNo(),
-                    "",
-                    rpTradePaymentOrder.getOrderIp());
-            String prePayXml = WeiXinPayUtils.getPrePayXml(weiXinPrePay, partnerKey);
-            // 调用微信支付的功能,获取微信支付code_url
-            Map<String, Object> prePayRequest =
-                WeiXinPayUtils.httpXmlRequest(WeixinConfigUtil.readConfig("prepay_url"), "POST", prePayXml);
-            if (WeixinTradeStateEnum.SUCCESS.name().equals(prePayRequest.get("return_code"))
-                && WeixinTradeStateEnum.SUCCESS.name().equals(prePayRequest.get("result_code")))
-            {
-                String weiXinPrePaySign =
-                    WeiXinPayUtils.geWeiXintPrePaySign(appid,
-                        mch_id,
-                        weiXinPrePay.getDeviceInfo(),
-                        WeiXinTradeTypeEnum.NATIVE.name(),
-                        prePayRequest,
-                        partnerKey);
-                String codeUrl = String.valueOf(prePayRequest.get("code_url"));
+//            WeiXinPrePay weiXinPrePay =
+//                sealWeixinPerPay(appid,
+//                    mch_id,
+//                    rpTradePaymentOrder.getProductName(),
+//                    rpTradePaymentOrder.getRemark(),
+//                    rpTradePaymentRecord.getBankOrderNo(),
+//                    rpTradePaymentOrder.getOrderAmount(),
+//                    rpTradePaymentOrder.getOrderTime(),
+//                    rpTradePaymentOrder.getOrderPeriod(),
+//                    WeiXinTradeTypeEnum.NATIVE,
+//                    rpTradePaymentRecord.getBankOrderNo(),
+//                    "",
+//                    rpTradePaymentOrder.getOrderIp());
+//            String prePayXml = WeiXinPayUtils.getPrePayXml(weiXinPrePay, partnerKey);
+//            // 调用微信支付的功能,获取微信支付code_url
+//            Map<String, Object> prePayRequest =
+//                WeiXinPayUtils.httpXmlRequest(WeixinConfigUtil.readConfig("prepay_url"), "POST", prePayXml);
+//            if (WeixinTradeStateEnum.SUCCESS.name().equals(prePayRequest.get("return_code"))
+//                && WeixinTradeStateEnum.SUCCESS.name().equals(prePayRequest.get("result_code")))
+//            {
+//                String weiXinPrePaySign =
+//                    WeiXinPayUtils.geWeiXintPrePaySign(appid,
+//                        mch_id,
+//                        weiXinPrePay.getDeviceInfo(),
+//                        WeiXinTradeTypeEnum.NATIVE.name(),
+//                        prePayRequest,
+//                        partnerKey);
+//                String codeUrl = String.valueOf(prePayRequest.get("code_url"));
+            
+            String codeUrl = response.getCode_url();
                 LOG.info("预支付生成成功,{}", codeUrl);
-                if (prePayRequest.get("sign").equals(weiXinPrePaySign))
+//                if (prePayRequest.get("sign").equals(weiXinPrePaySign))
+                if(codeUrl != null)
                 {
-                    rpTradePaymentRecord.setBankReturnMsg(prePayRequest.toString());
+//                    rpTradePaymentRecord.setBankReturnMsg(prePayRequest.toString());
+                    rpTradePaymentRecord.setBankReturnMsg(response.toString());
                     rpTradePaymentRecordDao.update(rpTradePaymentRecord);
                     scanPayResultVo.setCodeUrl(codeUrl);// 设置微信跳转地址
                     scanPayResultVo.setPayWayCode(PayWayEnum.WEIXIN.name());
                     scanPayResultVo.setProductName(rpTradePaymentOrder.getProductName());
                     scanPayResultVo.setOrderAmount(rpTradePaymentOrder.getOrderAmount());
-                }
-                else
-                {
-                    throw new TradeBizException(TradeBizException.TRADE_WEIXIN_ERROR, "微信返回结果签名异常");
-                }
+//                }
+//                else
+//                {
+//                    throw new TradeBizException(TradeBizException.TRADE_WEIXIN_ERROR, "微信返回结果签名异常");
+//                }
             }
             else
             {

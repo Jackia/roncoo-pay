@@ -130,5 +130,10 @@ public enum PayTypeEnum {
         jsonStr.append("]");
         return jsonStr.toString();
     }
+    
+    public static void main(String[] args)
+    {
+      System.out.println(PayTypeEnum.getEnum("SCANPAY"));;
+    }
 
 }
