@@ -1041,3 +1041,22 @@ alter table rp_user_pay_info add rsa_public_key varchar(100);
 -- 2016.9.5 增加登录信息字段
 alter table rp_user_info add mobile varchar(15);
 alter table rp_user_info add password varchar(50);
+
+drop table if exists hpstack_channel;
+create table hpstack_channel
+(
+   id                   varchar(50) not null,
+   create_time          datetime not null,
+   edit_time            datetime,
+   version              bigint not null,
+   remark               varchar(200),
+   channelNo              varchar(50),
+   channelName            varchar(100),
+   mobile           varchar(15) ,
+   linkman               varchar(50),
+   backurl               varchar(200),
+   callbackurl               varchar(200),
+   platform_code               varchar(200),
+   channel_key               varchar(200),
+   primary key (id)
+);

@@ -79,6 +79,16 @@
 					</table>
 				</fieldset>
 				
+				<fieldset id="xinzhongli_field" style="display: none;">
+					<legend>鑫中利</legend>
+					<table style="border-spacing: 10px">
+						<tr>
+							<td>商户号：</td>
+							<td><input type="text" name="xzl_merchantid" id="xzl_merchantid" maxlength="128" class="required" />&nbsp;&nbsp;</td>
+						</tr>
+					</table>
+				</fieldset>
+				
 				<fieldset id="ali_field" style="display: none;">
 					<legend>支付宝设置</legend>
 					<table style="border-spacing: 10px">
@@ -167,6 +177,41 @@
 		              			$("#we_merchantId").attr("class", "required");
 		              			$("#we_partnerKey").attr("class", "required");
 		              			
+		                      }else if(obj.name == "ALIPAY"){
+		                  		$("#ali_field").show();
+		              			$("#ali_partner").attr("class", "required");
+		              			$("#ali_sellerId").attr("class", "required");
+		              			$("#ali_key").attr("class", "required");
+		              			$("#ali_appid").attr("class", "required");
+		              			$("#ali_rsaPrivateKey").attr("class", "required");
+		              			$("#ali_rsaPublicKey").attr("class", "required");
+		                      }
+		                   }
+		                }
+		            },  
+		            error : function() {
+		            	alert("系统异常！");  
+		            }   
+		        });
+			}
+			
+		}
+		
+		if(fundIntoType == 'XINZHONGLI_RECEIVES'){
+			if(productCode != ""){
+				$.ajax({  
+		            type: "GET",
+		            dataType : "json",
+		            data:{productCode : productCode},
+		            url: "${baseURL }/pay/way/getPayWay",
+		            //请求成功完成后要执行的方法  
+		            success: function(result){
+		                if(result.length > 0){
+		                   for (var i=0;i<result.length;i++){
+		                      var obj = result[i];
+		                      if(obj.name == "WEIXIN"){
+		                      	$("#xinzhongli_field").show();
+		              			$("#xzl_merchantid").attr("class", "required");
 		                      }else if(obj.name == "ALIPAY"){
 		                  		$("#ali_field").show();
 		              			$("#ali_partner").attr("class", "required");

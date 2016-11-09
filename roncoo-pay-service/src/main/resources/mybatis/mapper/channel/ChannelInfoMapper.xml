@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.roncoo.pay.channel.dao.impl.ChannelInfoDAOImpl" >
+  <resultMap id="BaseResultMap" type="com.roncoo.pay.channel.entity.ChannelInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="edit_time" property="editTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="channelNo" property="channelNo" jdbcType="VARCHAR" />
+    <result column="channelName" property="channelName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="backurl" property="backurl" jdbcType="VARCHAR" />
+    <result column="callbackurl" property="callbackurl" jdbcType="VARCHAR" />
+    <result column="platform_code" property="platform_code" jdbcType="VARCHAR" />
+    <result column="channel_key" property="channel_key" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, channel_key, platform_code, channelNo, channelName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from hpstack_channel
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from hpstack_channel
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.roncoo.pay.channel.entity.ChannelInfo" >
+    insert into hpstack_channel (id, create_time, channelNo, 
+      channelName, mobile, linkman, backurl, callbackurl,platform_code,channel_key,remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{channelNo,jdbcType=VARCHAR}, 
+      #{channelName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR},
+      #{backurl,jdbcType=VARCHAR}, #{callbackurl,jdbcType=VARCHAR}, #{platform_code,jdbcType=VARCHAR}
+      , #{channel_key,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.roncoo.pay.channel.entity.ChannelInfo" >
+    update hpstack_channel
+    set edit_time = #{editTime,jdbcType=TIMESTAMP},
+      channelName = #{channelName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      backurl = #{backurl,jdbcType=VARCHAR},
+      callbackurl = #{callbackurl,jdbcType=VARCHAR},
+      platform_code = #{platform_code,jdbcType=VARCHAR},
+      channel_key = #{channel_key,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <sql id="table_name">  hpstack_channel </sql>
+    
+    <!-- 根据搜索条件获取数据 -->
+	<sql id="condition_sql">
+		<if test="channelNo != null and channelNo != ''"> and channelNo = #{channelNo,jdbcType=VARCHAR}</if>
+		<if test="channelName != null and channelName != ''"> and channelName like CONCAT('%' ,CONCAT(#{channelName},'%'))</if>
+		<if test="mobile != null and mobile != ''"> and mobile = #{mobile,jdbcType=VARCHAR}</if>
+	</sql>
+	
+	  	<select id="listBy" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select * from
+		<include refid="table_name" />
+		<where>
+			<include refid="condition_sql" />
+		</where>
+		order by create_time desc
+	</select>
+  
+  	<!-- 分页查询 -->
+	<select id="listPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select * from
+		<include refid="table_name" />
+		<where>
+			<include refid="condition_sql" />
+		</where>
+		order by create_time desc limit #{pageFirst}, #{pageSize}
+	</select>
+
+	<!-- 分页查询时要用到的总数统计 -->
+	<select id="listPageCount" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		select count(1) from
+		<include refid="table_name" />
+		<where>
+			<include refid="condition_sql" />
+		</where>
+	</select>
+</mapper>
