@@ -1060,3 +1060,10 @@ create table hpstack_channel
    channel_key               varchar(200),
    primary key (id)
 );
+
+
+alter table rp_user_info add idCardFrontPath varchar(150);
+alter table rp_user_info add idCardBackPath varchar(150);
+alter table rp_user_info add bankCardFrontPath varchar(150);
+alter table rp_user_info add personPhotoPath varchar(150);
+

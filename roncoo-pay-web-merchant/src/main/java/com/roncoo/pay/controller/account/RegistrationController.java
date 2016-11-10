@@ -15,6 +15,11 @@
  */
 package com.roncoo.pay.controller.account;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +45,7 @@ import com.roncoo.pay.common.core.entity.ApiCommonResultVo;
 import com.roncoo.pay.common.core.page.PageBean;
 import com.roncoo.pay.common.core.page.PageParam;
 import com.roncoo.pay.common.core.utils.EncryptUtil;
+import com.roncoo.pay.common.core.utils.StringUtil;
 import com.roncoo.pay.controller.common.BaseController;
 import com.roncoo.pay.controller.common.ConstantClass;
 import com.roncoo.pay.controller.common.JSONParam;
@@ -83,16 +89,79 @@ public class RegistrationController extends BaseController
     
     @RequestMapping(value = "/register.html", method = {RequestMethod.POST, RequestMethod.GET})
     public String register(HttpServletRequest request, MerchantAccount merchantAccount,
-        @RequestParam("idCardFront") CommonsMultipartFile idCardFront, @RequestParam("idCardBack") CommonsMultipartFile idCardBack,
-        @RequestParam("bankCardFront") CommonsMultipartFile bankCardFront, @RequestParam("personPhoto") CommonsMultipartFile personPhoto)
+        @RequestParam("idCardFront") CommonsMultipartFile idCardFront,
+        @RequestParam("idCardBack") CommonsMultipartFile idCardBack,
+        @RequestParam("bankCardFront") CommonsMultipartFile bankCardFront,
+        @RequestParam("personPhoto") CommonsMultipartFile personPhoto)
     {
+        String userNo = rpUserInfoService.getUserNo();
         
-        if (merchantAccount == null)
+        String idCardFrontPath = null;
+        String idCardBackPath = null;
+        String bankCardFrontPath = null;
+        String personPhotoPath = null;
+        if (userNo != null && !userNo.equals(""))
         {
-            System.out.println(merchantAccount);
+            // |获取在Web服务器上的 绝对路径
+            String path = request.getRealPath("/statics/fileupload/" + userNo);
+            
+            try
+            {
+                 idCardFrontPath = getSaveFilePath(path, idCardFront);
+                 idCardBackPath = getSaveFilePath(path, idCardBack);
+                 bankCardFrontPath = getSaveFilePath(path, bankCardFront);
+                 personPhotoPath = getSaveFilePath(path, personPhoto);
+            }
+            catch (Exception e)
+            {
+                request.setAttribute("errorMsg", "上传图片失败，每张图片不能炒作512K");
+                 return "system/registration_wizard";
+            }
+            
         }
         
-        return "system/registration_wizard";
+        merchantAccount.setUserNo(userNo);
+        merchantAccount.setIdCardFrontPath(idCardFrontPath);
+        merchantAccount.setIdCardBackPath(idCardBackPath);
+        merchantAccount.setBankCardFrontPath(bankCardFrontPath);
+        merchantAccount.setPersonPhotoPath(personPhotoPath);
+        
+        rpUserInfoService.registerByMerchant(merchantAccount, idCardFront, idCardBack, bankCardFront, personPhoto);
+        
+        return "/login";
+    }
+    
+    private String getSaveFilePath(String fileCatage, CommonsMultipartFile multipartFile) throws Exception
+    {
+        String fileName = multipartFile.getOriginalFilename();
+        InputStream input = multipartFile.getInputStream();
+        String newFileName = StringUtil.get32UUID() +  fileName.substring(fileName.indexOf("."), fileName.length());
+        
+        File file = null;
+        
+        file = new File(fileCatage);  
+        if (!file.isDirectory())  
+            file.mkdir();  
+        
+        file = new File(fileCatage,newFileName);
+        if (!file.exists())
+        {
+            file.createNewFile();
+        }
+        
+        //|文件输出流  
+        OutputStream os =new FileOutputStream(file);  
+        //|循环写入  
+        int length=0;  
+        byte [] buffer=new byte[2048];  
+        while((length=input.read(buffer))!=-1)  
+        {  
+            os.write(buffer,0, length);  
+        }  
+        input.close();  
+        os.close(); 
+        
+        return fileCatage + "/" + newFileName;
     }
     
     /**

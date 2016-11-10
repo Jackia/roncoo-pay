@@ -21,67 +21,166 @@ import com.roncoo.pay.common.core.entity.BaseEntity;
 import com.roncoo.pay.common.core.enums.PublicStatusEnum;
 
 /**
- * 用户信息
- * 龙果学院：www.roncoo.com
+ * 用户信息 龙果学院：www.roncoo.com
+ * 
  * @author：zenghao
  */
-public class RpUserInfo extends BaseEntity implements Serializable {
-
+public class RpUserInfo extends BaseEntity implements Serializable
+{
+    
     private String userNo;
-
+    
     private String userName;
-
+    
     private String accountNo;
-
+    
     private static final long serialVersionUID = 1L;
     
     private String mobile;
     
     private String password;
-
-
-    public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUserNo() {
+    
+    private String idCardFrontPath;
+    
+    private String idCardBackPath;
+    
+    private String bankCardFrontPath;
+    
+    private String personPhotoPath;
+    
+    public String getMobile()
+    {
+        return mobile;
+    }
+    
+    public void setMobile(String mobile)
+    {
+        this.mobile = mobile;
+    }
+    
+    public String getPassword()
+    {
+        return password;
+    }
+    
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+    
+    public String getUserNo()
+    {
         return userNo;
     }
-
-    public void setUserNo(String userNo) {
+    
+    public void setUserNo(String userNo)
+    {
         this.userNo = userNo == null ? null : userNo.trim();
     }
-
-    public String getUserName() {
+    
+    public String getUserName()
+    {
         return userName;
     }
-
-    public void setUserName(String userName) {
+    
+    public void setUserName(String userName)
+    {
         this.userName = userName == null ? null : userName.trim();
     }
-
-    public String getAccountNo() {
+    
+    public String getAccountNo()
+    {
         return accountNo;
     }
-
-    public void setAccountNo(String accountNo) {
+    
+    public void setAccountNo(String accountNo)
+    {
         this.accountNo = accountNo == null ? null : accountNo.trim();
     }
     
-    public String getStatusDesc() {
+    public String getStatusDesc()
+    {
         return PublicStatusEnum.getEnum(this.getStatus()).getDesc();
     }
-
+    
+    /**
+     * 获取 idCardFrontPath
+     * 
+     * @return 返回 idCardFrontPath
+     */
+    public String getIdCardFrontPath()
+    {
+        return idCardFrontPath;
+    }
+    
+    /**
+     * 设置 idCardFrontPath
+     * 
+     * @param 对idCardFrontPath进行赋值
+     */
+    public void setIdCardFrontPath(String idCardFrontPath)
+    {
+        this.idCardFrontPath = idCardFrontPath;
+    }
+    
+    /**
+     * 获取 idCardBackPath
+     * 
+     * @return 返回 idCardBackPath
+     */
+    public String getIdCardBackPath()
+    {
+        return idCardBackPath;
+    }
+    
+    /**
+     * 设置 idCardBackPath
+     * 
+     * @param 对idCardBackPath进行赋值
+     */
+    public void setIdCardBackPath(String idCardBackPath)
+    {
+        this.idCardBackPath = idCardBackPath;
+    }
+    
+    /**
+     * 获取 bankCardFrontPath
+     * 
+     * @return 返回 bankCardFrontPath
+     */
+    public String getBankCardFrontPath()
+    {
+        return bankCardFrontPath;
+    }
+    
+    /**
+     * 设置 bankCardFrontPath
+     * 
+     * @param 对bankCardFrontPath进行赋值
+     */
+    public void setBankCardFrontPath(String bankCardFrontPath)
+    {
+        this.bankCardFrontPath = bankCardFrontPath;
+    }
+    
+    /**
+     * 获取 personPhotoPath
+     * 
+     * @return 返回 personPhotoPath
+     */
+    public String getPersonPhotoPath()
+    {
+        return personPhotoPath;
+    }
+    
+    /**
+     * 设置 personPhotoPath
+     * 
+     * @param 对personPhotoPath进行赋值
+     */
+    public void setPersonPhotoPath(String personPhotoPath)
+    {
+        this.personPhotoPath = personPhotoPath;
+    }
+    
 }

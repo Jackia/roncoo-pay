@@ -17,8 +17,11 @@ package com.roncoo.pay.user.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.roncoo.pay.common.core.page.PageBean;
 import com.roncoo.pay.common.core.page.PageParam;
+import com.roncoo.pay.user.entity.MerchantAccount;
 import com.roncoo.pay.user.entity.RpUserInfo;
 
 /**
@@ -67,6 +70,20 @@ public interface RpUserInfoService{
      * @return
      */
     void registerOffline(String userName, String mobile, String password) ;
+    
+    /**
+     * 用户线下注册
+     * 
+     * @param userName
+     *            用户名
+     * @param mobile
+     *            手机号
+     * @param password
+     *            密码
+     * @return
+     */
+    void registerByMerchant(MerchantAccount merchantAccount,CommonsMultipartFile idCardFront, CommonsMultipartFile idCardBack,
+        CommonsMultipartFile bankCardFront,  CommonsMultipartFile personPhoto) ;
 
 	/**
 	 * 根据商户编号获取商户信息
@@ -87,5 +104,11 @@ public interface RpUserInfoService{
 	 * @return
 	 */
 	List<RpUserInfo> listAll();
+	
+	/**
+	 * 获取商户编号
+	 */
+	
+	String getUserNo();
 	
 }

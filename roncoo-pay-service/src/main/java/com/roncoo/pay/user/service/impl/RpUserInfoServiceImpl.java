@@ -24,6 +24,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.roncoo.pay.account.entity.RpAccount;
 import com.roncoo.pay.account.service.RpAccountService;
@@ -33,6 +34,7 @@ import com.roncoo.pay.common.core.page.PageParam;
 import com.roncoo.pay.common.core.utils.EncryptUtil;
 import com.roncoo.pay.common.core.utils.StringUtil;
 import com.roncoo.pay.user.dao.RpUserInfoDao;
+import com.roncoo.pay.user.entity.MerchantAccount;
 import com.roncoo.pay.user.entity.RpUserInfo;
 import com.roncoo.pay.user.service.BuildNoService;
 import com.roncoo.pay.user.service.RpUserInfoService;
@@ -124,6 +126,65 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
         rpAccount.setTotalExpend(new BigDecimal("0"));
         rpAccount.setTotalIncome(new BigDecimal("0"));
         rpAccountService.saveData(rpAccount);
+    }
+    
+    /**
+     * 上传个人信息资质
+     * @param merchantAccount
+     * @param idCardFront
+     * @param idCardBack
+     * @param bankCardFront
+     * @param personPhoto
+     */
+    @Override
+    public void registerByMerchant(MerchantAccount merchantAccount, CommonsMultipartFile idCardFront,
+        CommonsMultipartFile idCardBack, CommonsMultipartFile bankCardFront, CommonsMultipartFile personPhoto)
+    {
+        String userNo = buildNoService.buildUserNo();
+        String accountNo = buildNoService.buildAccountNo();
+
+        //生成用户信息
+        RpUserInfo rpUserInfo = new RpUserInfo();
+        rpUserInfo.setAccountNo(accountNo);
+        rpUserInfo.setCreateTime(new Date());
+        rpUserInfo.setId(StringUtil.get32UUID());
+        rpUserInfo.setStatus(PublicStatusEnum.ACTIVE.name());
+        rpUserInfo.setUserName(merchantAccount.getUserName());
+        rpUserInfo.setUserNo(userNo);
+        rpUserInfo.setMobile(merchantAccount.getMobile());
+        rpUserInfo.setPassword(EncryptUtil.encodeMD5String(merchantAccount.getPassword()));
+        rpUserInfo.setVersion(0);
+        this.saveData(rpUserInfo);
+
+        // 生成账户信息
+        RpAccount rpAccount = new RpAccount();
+        rpAccount.setAccountNo(accountNo);
+        rpAccount.setAccountType("0");
+        rpAccount.setCreateTime(new Date());
+        rpAccount.setEditTime(new Date());
+        rpAccount.setId(StringUtil.get32UUID());
+        rpAccount.setStatus(PublicStatusEnum.ACTIVE.name());
+        rpAccount.setUserNo(userNo);
+        rpAccount.setBalance(new BigDecimal("0"));
+        rpAccount.setSecurityMoney(new BigDecimal("0"));
+        rpAccount.setSettAmount(new BigDecimal("0"));
+        rpAccount.setTodayExpend(new BigDecimal("0"));
+        rpAccount.setTodayIncome(new BigDecimal("0"));
+        rpAccount.setUnbalance(new BigDecimal("0"));
+        rpAccount.setTotalExpend(new BigDecimal("0"));
+        rpAccount.setTotalIncome(new BigDecimal("0"));
+        rpAccountService.saveData(rpAccount);
+    }
+    
+    /**
+     * 重载方法
+     * @return
+     */
+    @Override
+    public String getUserNo()
+    {
+        String userNo = buildNoService.buildUserNo();
+        return userNo;
     }
 
     /**
