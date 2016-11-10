@@ -53,5 +53,18 @@
 	<mvc:resources mapping="/common/**" location="/common/" cache-period="31536000" />
 	<mvc:resources mapping="/lte/**" location="/lte/" cache-period="31536000" />
 	<mvc:resources mapping="/statics/**" location="/statics/" cache-period="31536000" />
+	
+	<bean id="multipartResolver"  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+  
+    <!-- one of the properties available; the maximum file size in bytes  -->  
+    <!-- 10mb -->  
+    <property name="maxUploadSize" value="5000000"/>  
+    
+    <property name="maxInMemorySize">
+<value>4096</value>
+</property>
+  
+</bean>  
 
 </beans>

@@ -28,7 +28,7 @@ public class Submarchant implements Serializable
     private static final long serialVersionUID = -4747074629167758465L;
     
     /**
-     * 商户注册请求号
+     * 商户注册请求号，注册请求号   N   MAX(50) 商户注册请求号
      */
     private String requestid = "";
     
@@ -41,43 +41,98 @@ public class Submarchant implements Serializable
      * PrivateCash：对私
      */
     private String bankaccounttype = "";
+    
+    /**
+     *  银行卡号    N   MAX(20) 银行卡号
+     */
     private String bankaccountnumber = "";
+    
+    /**
+     * 开户区/县   N   MAX(6)  银行卡开户区/县6位地区代码
+     */
     private String bankarea = "";
+    
+    /**
+     * 开户市 N   MAX(6)  银行卡开户市6位地区代码
+     */
     private String bankcity = "";
+    
+    /**
+     * 银行卡开户行，总行名称 N   MAX(20) 工商银行、农业银行、招商 银行、建设银行、
+     * 交通银行、中信银行、光大银行、北京银行、深圳发展银行、中国 银行、兴业银行、
+     * 民生银行、华夏银行等
+     */
     private String bankheadofficename = "";
+    
+    /**
+     *  银行卡开户所在支行   N   MAX(50) 银行卡开户的支行名称
+     */
     private String bankname = "";
+    
+    /**
+     * 开户省 N   MAX(6)  银行卡开户省6位地区代码
+     */
     private String bankprovince = "";
+    
+    /**
+     * 绑定手机    N   MAX(11) 11 位的手机号
+     */
     private String bindmobile = "";
+    
+    /**
+     * 后台通知地址  N   MAX(255)    审核结果，回调通知地址
+     */
     private String callbackurl = "";
     
     /**
-     * PERSON ：个人
+     * PERSON ：个人，商户类型    N   MAX(10) PERSON ：个人
      */
     private String customertype = "";
+    
+    /**
+     * 保证金 N   MAX(10) 单位：分 
+     * 保证金仅会影响到商户的出款金额：可用于出款的金额 = 账户余额 – 保证金
+     */
     private String deposit = "";
+    
+    /**
+     * 身份证 N   MAX(18) 身份证号码
+     */
     private String idcard = "";
+    
+    /**
+     * 联系人 N   MAX(20) 联系人姓名
+     */
     private String linkman = "";
     
     /**
      * 商户起始结算金额，大于0的整数，单位：分。
      */
     private String minsettleamount = "";
+    
+    /**
+     * 平台码 N   MAX(18) 鑫中利平台码
+     */
     private String platform_code = "";
+    
+    /**
+     * 签约名 N   MAX(30) 个人时，填写姓名
+     */
     private String signedname = "";
     
     
     /**
-     * 营业执照号
+     * 营业执照号.营业执照号       MAX(30) 营业执照号
      */
     private String businesslicence;
     
     /**
-     * 法人名称
+     * 法人名称,法人名称        MAX(10) 企业的法人姓名
      */
     private String legalperson;
     
     /**
-     * 法人身份证号
+     * 法人身份证号,法人身份证号      MAX(18) 法人身份证号
      */
     private String legalpersonidcard;
     
