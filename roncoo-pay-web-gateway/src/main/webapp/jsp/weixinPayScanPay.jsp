@@ -131,8 +131,10 @@
   <script type="text/javascript">
       $(function(){
           var str = $("#codeUrl").val();
+          alert(str)
           $("#code").qrcode({
-              render: "table",
+              //render: "table",
+              render: "canvas",
               width: 190,
               height:190,
               text: str
