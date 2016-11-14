@@ -79,6 +79,11 @@ public class AccountController {
 	@RequestMapping(value = "/historyList", method ={RequestMethod.POST,RequestMethod.GET})
 	public String historyList(RpAccountHistory rpAccountHistory,PageParam pageParam, Model model) {
 		PageBean pageBean = rpAccountHistoryService.listPage(pageParam, rpAccountHistory);
+		
+		if(pageBean == null)
+		{
+		    return "account/historyList";
+		}
 		List<Object> recordList = pageBean.getRecordList();
 		for(Object obj : recordList){
 			RpAccountHistory history = (RpAccountHistory)obj;

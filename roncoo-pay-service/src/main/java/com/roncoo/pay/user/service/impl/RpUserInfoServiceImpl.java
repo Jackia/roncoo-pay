@@ -37,6 +37,7 @@ import com.roncoo.pay.user.dao.RpUserInfoDao;
 import com.roncoo.pay.user.entity.MerchantAccount;
 import com.roncoo.pay.user.entity.RpUserBankAccount;
 import com.roncoo.pay.user.entity.RpUserInfo;
+import com.roncoo.pay.user.enums.CardTypeEnum;
 import com.roncoo.pay.user.service.BuildNoService;
 import com.roncoo.pay.user.service.RpUserBankAccountService;
 import com.roncoo.pay.user.service.RpUserInfoService;
@@ -198,7 +199,10 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
         rpUserBankAccount.setCity(merchantAccount.getCity());
         rpUserBankAccount.setProvince(merchantAccount.getProvince());
         rpUserBankAccount.setStreet(merchantAccount.getBankname());
-        rpUserBankAccount.setBankName(merchantAccount.getBankheadofficename());
+        rpUserBankAccount.setBankCode(merchantAccount.getBankheadofficename());
+        rpUserBankAccount.setBankAccountNo(merchantAccount.getBankaccountnumber());
+        rpUserBankAccount.setCardType(CardTypeEnum.IDENTITY.name());
+        
         
         rpUserBankAccountService.createOrUpdate(rpUserBankAccount);
     }

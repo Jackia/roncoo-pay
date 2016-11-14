@@ -132,7 +132,7 @@ public class RegistrationController extends BaseController
         
         rpUserInfoService.registerByMerchant(merchantAccount);
         
-        return "/login";
+        return "redirect:/login";
     }
     
     private String getSaveFilePath(String fileCatage, CommonsMultipartFile multipartFile,String userNo) throws Exception

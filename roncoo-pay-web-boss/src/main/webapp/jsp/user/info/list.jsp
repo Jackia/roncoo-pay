@@ -47,6 +47,8 @@
 				<th width="10%">账户编号</th>
 				<th width="10%">状态</th>
 				<th width="15%">创建时间</th>
+				<th width="15%">吉米商户号</th>
+				<th width="15%">操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -60,6 +62,13 @@
 					<td><fmt:formatDate value="${item.createTime}"
 					     pattern="yyyy-MM-dd HH:mm:ss" />
 			        </td>
+			        <td>${item.jimi_merchantid}</td>
+			        <td>     
+			        	<c:if test="${not empty item.jimi_merchantid }">
+			        	<a target="navTab" href="${baseURL }/user/info/searchByKey?userNo=${item.userNo}" style="color: blue;">生成二维码</a>
+                        </c:if>
+			        </td>
+			        
 				</tr>
 			</c:forEach>
 			<c:if test="${pageBean.totalCount==0}"><tr><td>暂无数据</td></tr></c:if>

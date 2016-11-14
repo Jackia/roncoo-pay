@@ -73,7 +73,7 @@
 
 .wizard > .steps > ul > li
 {
-    width: 25%;
+    width: 100%;
 }
 
 .wizard > .steps > ul > li,
@@ -92,7 +92,7 @@
 .wizard > .steps a:hover,
 .wizard > .steps a:active
 {
-    display: block;
+    display: none;
     width: auto;
     margin: 0 0.5em 0.5em;
     padding: 1em 1em;
@@ -115,7 +115,8 @@
 .wizard > .steps .current a,
 .wizard > .steps .current a:hover,
 .wizard > .steps .current a:active
-{
+{  
+    display: block;
     background: #A9D86E;
     color: #fff;
     cursor: default;
@@ -165,9 +166,9 @@
 .wizard > .content > .body
 {
     float: left;
-    position: absolute;
-    width: 95%;
-    height: 95%;
+    /*position: absolute;*/
+    width: 100%;
+    /*height: 95%;*/
 }
 
 .wizard > .content > .body ul
@@ -206,11 +207,22 @@
     font-weight: normal;
 }
 
+.wizard > .content > .body .col-lg-10 {
+    float: left;
+    width: 70%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .wizard > .content > .body label
 {
-    display: inline-block;
+    /*display: inline-block;*/
+    float: left;
+    width: 30%;
     margin-bottom: 0px;
     padding-top: 7px;
+    padding-left: 0;
+    padding-right: 0;
     font-weight: normal;
 }
 

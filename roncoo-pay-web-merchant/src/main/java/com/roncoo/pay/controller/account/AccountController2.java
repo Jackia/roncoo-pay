@@ -54,7 +54,7 @@ import com.roncoo.pay.user.service.RpUserPayConfigService;
  */
 @Controller
 @RequestMapping("/merchant/account")
-public class AccountController extends BaseController {
+public class AccountController2 extends BaseController {
 	@Autowired
 	private RpUserPayConfigService rpUserPayConfigService;
 	@Autowired

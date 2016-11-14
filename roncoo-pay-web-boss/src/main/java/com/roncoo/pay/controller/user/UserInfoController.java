@@ -28,7 +28,9 @@ import com.roncoo.pay.common.core.dwz.DwzAjax;
 import com.roncoo.pay.common.core.page.PageBean;
 import com.roncoo.pay.common.core.page.PageParam;
 import com.roncoo.pay.user.entity.RpUserInfo;
+import com.roncoo.pay.user.entity.RpUserPayConfig;
 import com.roncoo.pay.user.service.RpUserInfoService;
+import com.roncoo.pay.user.service.RpUserPayConfigService;
 
 /**
  * 用户信息
@@ -41,6 +43,9 @@ public class UserInfoController {
 	
 	@Autowired
 	private RpUserInfoService rpUserInfoService;
+	
+	@Autowired
+    private RpUserPayConfigService rpUserPayConfigService;
 
 	/**
 	 * 函数功能说明 ： 查询用户信息
@@ -88,6 +93,19 @@ public class UserInfoController {
 		model.addAttribute("dwz", dwz);
 		return DWZ.AJAX_DONE;
 	}
+	
+	@RequestMapping(value = "/searchByKey", method = RequestMethod.GET)
+    public String searchByKey(Model model,@RequestParam("userNo") String userNo) 
+	{
+	    String codeurl = "";
+	    
+	    RpUserPayConfig payConfig = rpUserPayConfigService.getByUserNo(userNo);
+	    codeurl = "payKey=" + payConfig.getPayKey() + "&paySecret=" + payConfig.getPaySecret() + "&payWayCode=";
+	    model.addAttribute("codeurl", codeurl);
+	    
+	    return "user/info/barcode";
+	    
+    }
 	
 	/**
 	 * 函数功能说明 ： 查询用户信息 查找带回
