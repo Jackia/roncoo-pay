@@ -1066,4 +1066,7 @@ alter table rp_user_info add idCardFrontPath varchar(150);
 alter table rp_user_info add idCardBackPath varchar(150);
 alter table rp_user_info add bankCardFrontPath varchar(150);
 alter table rp_user_info add personPhotoPath varchar(150);
+alter table rp_user_info add jimi_merchantid varchar(30);
+alter table rp_user_info add jimi_status varchar(5);
+
 

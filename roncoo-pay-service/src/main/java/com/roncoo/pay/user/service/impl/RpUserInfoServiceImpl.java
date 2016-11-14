@@ -35,8 +35,10 @@ import com.roncoo.pay.common.core.utils.EncryptUtil;
 import com.roncoo.pay.common.core.utils.StringUtil;
 import com.roncoo.pay.user.dao.RpUserInfoDao;
 import com.roncoo.pay.user.entity.MerchantAccount;
+import com.roncoo.pay.user.entity.RpUserBankAccount;
 import com.roncoo.pay.user.entity.RpUserInfo;
 import com.roncoo.pay.user.service.BuildNoService;
+import com.roncoo.pay.user.service.RpUserBankAccountService;
 import com.roncoo.pay.user.service.RpUserInfoService;
 
 /**
@@ -55,6 +57,9 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
 	
 	@Autowired
 	private RpAccountService rpAccountService;
+	
+	@Autowired
+	private RpUserBankAccountService rpUserBankAccountService;
 	
 	@Override
 	public void saveData(RpUserInfo rpUserInfo) {
@@ -137,10 +142,9 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
      * @param personPhoto
      */
     @Override
-    public void registerByMerchant(MerchantAccount merchantAccount, CommonsMultipartFile idCardFront,
-        CommonsMultipartFile idCardBack, CommonsMultipartFile bankCardFront, CommonsMultipartFile personPhoto)
+    @Transactional(rollbackFor = Exception.class)
+    public void registerByMerchant(MerchantAccount merchantAccount)
     {
-        String userNo = buildNoService.buildUserNo();
         String accountNo = buildNoService.buildAccountNo();
 
         //生成用户信息
@@ -150,10 +154,15 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
         rpUserInfo.setId(StringUtil.get32UUID());
         rpUserInfo.setStatus(PublicStatusEnum.ACTIVE.name());
         rpUserInfo.setUserName(merchantAccount.getUserName());
-        rpUserInfo.setUserNo(userNo);
+        rpUserInfo.setUserNo(merchantAccount.getUserNo());
         rpUserInfo.setMobile(merchantAccount.getMobile());
         rpUserInfo.setPassword(EncryptUtil.encodeMD5String(merchantAccount.getPassword()));
         rpUserInfo.setVersion(0);
+        
+        rpUserInfo.setIdCardFrontPath(merchantAccount.getIdCardFrontPath());
+        rpUserInfo.setIdCardBackPath(merchantAccount.getIdCardBackPath());
+        rpUserInfo.setBankCardFrontPath(merchantAccount.getBankCardFrontPath());
+        rpUserInfo.setPersonPhotoPath(merchantAccount.getPersonPhotoPath());
         this.saveData(rpUserInfo);
 
         // 生成账户信息
@@ -164,7 +173,7 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
         rpAccount.setEditTime(new Date());
         rpAccount.setId(StringUtil.get32UUID());
         rpAccount.setStatus(PublicStatusEnum.ACTIVE.name());
-        rpAccount.setUserNo(userNo);
+        rpAccount.setUserNo(merchantAccount.getUserNo());
         rpAccount.setBalance(new BigDecimal("0"));
         rpAccount.setSecurityMoney(new BigDecimal("0"));
         rpAccount.setSettAmount(new BigDecimal("0"));
@@ -174,6 +183,24 @@ public class RpUserInfoServiceImpl implements RpUserInfoService{
         rpAccount.setTotalExpend(new BigDecimal("0"));
         rpAccount.setTotalIncome(new BigDecimal("0"));
         rpAccountService.saveData(rpAccount);
+        
+        //创建银行信息
+        RpUserBankAccount rpUserBankAccount = new RpUserBankAccount();
+        rpUserBankAccount.setUserNo(merchantAccount.getUserNo());
+        rpUserBankAccount.setAreas(merchantAccount.getAreas());
+        rpUserBankAccount.setBankAccountName(merchantAccount.getAccountname());
+        rpUserBankAccount.setBankAccountType("PRIVATE_DEBIT_ACCOUNT");
+//        rpUserBankAccount.setBankCode(merchantAccount.getBankaccountnumber());
+        rpUserBankAccount.setBankName(merchantAccount.getBankheadofficename());
+        rpUserBankAccount.setCardNo(merchantAccount.getBankaccountnumber());
+//        rpUserBankAccount.setCardType(merchantAccount.get);
+        rpUserBankAccount.setMobileNo(merchantAccount.getMobile());
+        rpUserBankAccount.setCity(merchantAccount.getCity());
+        rpUserBankAccount.setProvince(merchantAccount.getProvince());
+        rpUserBankAccount.setStreet(merchantAccount.getBankname());
+        rpUserBankAccount.setBankName(merchantAccount.getBankheadofficename());
+        
+        rpUserBankAccountService.createOrUpdate(rpUserBankAccount);
     }
     
     /**

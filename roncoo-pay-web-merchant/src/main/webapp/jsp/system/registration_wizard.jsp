@@ -26,8 +26,10 @@
 
 <!-- Custom styles for this template -->
 <link href="${baseURL}/statics/css/style.css" rel="stylesheet">
-<link href="${baseURL}/statics/css/style-responsive.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="${baseURL}/statics/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+<link href="${baseURL}/statics/css/style-responsive.css"
+	rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="${baseURL}/statics/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
 
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
@@ -50,7 +52,9 @@
 							<a href="${baseURL}/login">返回<span>商户登录页面</span></a>
 						</header>
 						<div class="panel-body">
-							<form id="wizard-validation-form" action="${baseURL}/register.html" method="POST" enctype="multipart/form-data">
+							<form id="wizard-validation-form"
+								action="${baseURL}/register.html" method="POST"
+								enctype="multipart/form-data">
 								<div>
 									<h3>用户基本信息</h3>
 									<section>
@@ -66,7 +70,7 @@
 										</div>
 
 										<div class="form-group clearfix">
-											<label class="col-lg-2 control-label " for="userName">手机号<font
+											<label class="col-lg-2 control-label " for="mobile">手机号<font
 												color="red">*</font>
 											</label>
 											<div class="col-lg-10">
@@ -75,10 +79,11 @@
 
 											</div>
 										</div>
-										
+
 										<div class="form-group clearfix">
 											<label class="col-lg-2 control-label " for="email">电子邮件
-												<font color="red">*</font></label>
+												<font color="red">*</font>
+											</label>
 											<div class="col-lg-10">
 												<input id="email" name="email" type="text"
 													class="required email form-control">
@@ -90,7 +95,7 @@
 												登录密码 <font color="red">*</font>
 											</label>
 											<div class="col-lg-10">
-												<input id="password" name="password" type="text"
+												<input id="password" name="password" type="password"
 													class="required form-control" placeholder="登录密码">
 
 											</div>
@@ -101,7 +106,7 @@
 												<font color="red">*</font>
 											</label>
 											<div class="col-lg-10">
-												<input id="confirm" name="confirm" type="text"
+												<input id="confirm" name="confirm" type="password"
 													class="required form-control" placeholder="确认密码">
 											</div>
 										</div>
@@ -110,7 +115,8 @@
 									<section>
 										<div class="form-group clearfix">
 											<label class="col-lg-2 control-label" for="name">
-												真实姓名 <font color="red">*</font></label>
+												真实姓名 <font color="red">*</font>
+											</label>
 											<div class="col-lg-10">
 												<input id="accountname" name="accountname" type="text"
 													class="required form-control">
@@ -118,7 +124,8 @@
 										</div>
 										<div class="form-group clearfix">
 											<label class="col-lg-2 control-label " for="surname">
-												身份证号 <font color="red">*</font></label>
+												身份证号 <font color="red">*</font>
+											</label>
 											<div class="col-lg-10">
 												<input id="idcard" name="idcard" type="text"
 													class="required form-control">
@@ -128,25 +135,35 @@
 
 
 										<div class="form-group clearfix">
-											<label class="col-lg-2 control-label " for="address">开户行<font color="red">*</font>
+											<label class="col-lg-2 control-label " for="address">开户行<font
+												color="red">*</font>
 											</label>
 											<div class="col-lg-10">
-												<input id="bankheadofficename" name="bankheadofficename" type="text"
-													class="required form-control">
+											    <select name="bankheadofficename" id="bankheadofficename" class="required form-control">
+		                            <c:forEach var="item" items="${BankCodeEnums}">
+		                                <option value="${item.name }">${item.desc }</option>
+		                            </c:forEach>
+	                        	</select>
 											</div>
 										</div>
 
 										<div class="form-group clearfix">
-											<label class="col-lg-2 control-label " for="address">开户地址<font color="red">*</font>
+											<label class="col-lg-2 control-label " for="address">开户地址<font
+												color="red">*</font>
 											</label>
 											<div class="col-lg-10">
-												<input id="bankname2" name="bankname2" type="text"
-													class="required form-control">
+												<select id="province" name="province"
+													class="required "></select> <select id="city"
+													name="city" class="required "></select> <select
+													id="areas" name="areas" class="required "></select>
 											</div>
+
+
 										</div>
 
 										<div class="form-group clearfix">
-											<label class="col-lg-2 control-label " for="address">银行卡开户所在支行<font color="red">*</font>
+											<label class="col-lg-2 control-label " for="address">银行卡开户所在支行<font
+												color="red">*</font>
 											</label>
 											<div class="col-lg-10">
 												<input id="bankname" name="bankname" type="text"
@@ -155,11 +172,12 @@
 										</div>
 
 										<div class="form-group clearfix">
-											<label class="col-lg-2 control-label " for="address">银行卡号<font color="red">*</font>
+											<label class="col-lg-2 control-label " for="address">银行卡号<font
+												color="red">*</font>
 											</label>
 											<div class="col-lg-10">
-												<input id="bankaccountnumber" name="bankaccountnumber" type="text"
-													class="required form-control">
+												<input id="bankaccountnumber" name="bankaccountnumber"
+													type="text" class="required form-control">
 											</div>
 										</div>
 
@@ -170,63 +188,81 @@
 										<!--main content start-->
 
 										<div class="form-group">
-                                          <label class="control-label col-md-3">身份证正面<font color="red">*</font></label>
-                                          <div class="controls col-md-9">
-                                              <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重选图片</span>
-                                                <input type="file" name="idCardFront" class="required form-control default"/>
-                                                </span>
-                                                  <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                                  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-                                              </div>
-                                          </div>
-                                          
-                                          <div class="form-group">
-                                          <label class="control-label col-md-3">身份证反面<font color="red">*</font></label>
-                                          <div class="controls col-md-9">
-                                              <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重选图片</span>
-                                                <input type="file" name="idCardBack" class="required form-control default" />
-                                                </span>
-                                                  <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                                  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-                                              </div>
-                                          </div>
-                                          
-                                      </div>
-                                      
-                                      <div class="form-group">
-                                          <label class="control-label col-md-3">银行卡正面<font color="red">*</font></label>
-                                          <div class="controls col-md-9">
-                                              <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重选图片</span>
-                                                <input type="file" name="bankCardFront" class="required form-control default" />
-                                                </span>
-                                                  <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                                  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-                                              </div>
-                                          </div>
-                                          
-                                          <div class="form-group">
-                                          <label class="control-label col-md-3">手持身份证照片<font color="red">*</font></label>
-                                          <div class="controls col-md-9">
-                                              <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> 重选图片</span>
-                                                <input type="file" name="personPhoto" class="required form-control default" />
-                                                </span>
-                                                  <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                                  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
-                                              </div>
-                                          </div>
-                                          
+											<label class="control-label col-md-3">身份证正面<font
+												color="red">*</font></label>
+											<div class="controls col-md-9">
+												<div class="fileupload fileupload-new"
+													data-provides="fileupload">
+													<span class="btn btn-white btn-file"> <span
+														class="fileupload-new"><i class="fa fa-paper-clip"></i>
+															选择图片</span> <span class="fileupload-exists"><i
+															class="fa fa-undo"></i> 重选图片</span> <input type="file"
+														name="idCardFront" class="required form-control default" />
+													</span> <span class="fileupload-preview" style="margin-left: 5px;"></span>
+													<a href="#" class="close fileupload-exists"
+														data-dismiss="fileupload"
+														style="float: none; margin-left: 5px;"></a>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-md-3">身份证反面<font
+													color="red">*</font></label>
+												<div class="controls col-md-9">
+													<div class="fileupload fileupload-new"
+														data-provides="fileupload">
+														<span class="btn btn-white btn-file"> <span
+															class="fileupload-new"><i class="fa fa-paper-clip"></i>
+																选择图片</span> <span class="fileupload-exists"><i
+																class="fa fa-undo"></i> 重选图片</span> <input type="file"
+															name="idCardBack" class="required form-control default" />
+														</span> <span class="fileupload-preview"
+															style="margin-left: 5px;"></span> <a href="#"
+															class="close fileupload-exists" data-dismiss="fileupload"
+															style="float: none; margin-left: 5px;"></a>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-md-3">银行卡正面<font
+													color="red">*</font></label>
+												<div class="controls col-md-9">
+													<div class="fileupload fileupload-new"
+														data-provides="fileupload">
+														<span class="btn btn-white btn-file"> <span
+															class="fileupload-new"><i class="fa fa-paper-clip"></i>
+																选择图片</span> <span class="fileupload-exists"><i
+																class="fa fa-undo"></i> 重选图片</span> <input type="file"
+															name="bankCardFront"
+															class="required form-control default" />
+														</span> <span class="fileupload-preview"
+															style="margin-left: 5px;"></span> <a href="#"
+															class="close fileupload-exists" data-dismiss="fileupload"
+															style="float: none; margin-left: 5px;"></a>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label col-md-3">手持身份证照片<font
+														color="red">*</font></label>
+													<div class="controls col-md-9">
+														<div class="fileupload fileupload-new"
+															data-provides="fileupload">
+															<span class="btn btn-white btn-file"> <span
+																class="fileupload-new"><i
+																	class="fa fa-paper-clip"></i> 选择图片</span> <span
+																class="fileupload-exists"><i class="fa fa-undo"></i>
+																	重选图片</span> <input type="file" name="personPhoto"
+																class="required form-control default" />
+															</span> <span class="fileupload-preview"
+																style="margin-left: 5px;"></span> <a href="#"
+																class="close fileupload-exists"
+																data-dismiss="fileupload"
+																style="float: none; margin-left: 5px;"></a>
+														</div>
+													</div>
 									</section>
 									<h3>完成</h3>
 									<section>
@@ -249,6 +285,7 @@
 
 			</div>
 			<!-- page end-->
+			
 		</section>
 	</section>
 	<!--main content end-->
@@ -276,6 +313,7 @@
 
 	<!--right slidebar-->
 	<script src="${baseURL}/statics/js/slidebars.min.js"></script>
+	<script type="text/javascript" src="${baseURL}/statics/js/jsAddress.js"></script>
 
 
 	<!--Form Validation-->
@@ -293,9 +331,11 @@
 
 	<!--script for this page-->
 	<script src="${baseURL}/statics/js/jquery.stepy.js"></script>
-	<script type="text/javascript" src="${baseURL}/statics/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-<script type="text/javascript" src="${baseURL}/statics/assets/fuelux/js/spinner.min.js"></script>
-	
+	<script type="text/javascript"
+		src="${baseURL}/statics/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+	<script type="text/javascript"
+		src="${baseURL}/statics/assets/fuelux/js/spinner.min.js"></script>
+
 	<script>
 		//step wizard
 
@@ -335,11 +375,12 @@
 					form.submit();
 				}
 			});
+			
+			addressInit('province', 'city', 'areas'); 
 
 		});
+		
+		 
 	</script>
-
-
-
 </body>
 </html>

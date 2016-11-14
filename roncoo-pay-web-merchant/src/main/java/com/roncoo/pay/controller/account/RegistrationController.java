@@ -53,6 +53,8 @@ import com.roncoo.pay.user.entity.MerchantAccount;
 import com.roncoo.pay.user.entity.RpPayWay;
 import com.roncoo.pay.user.entity.RpUserInfo;
 import com.roncoo.pay.user.entity.RpUserPayConfig;
+import com.roncoo.pay.user.enums.BankAccountTypeEnum;
+import com.roncoo.pay.user.enums.BankCodeEnum;
 import com.roncoo.pay.user.service.RpPayWayService;
 import com.roncoo.pay.user.service.RpUserInfoService;
 import com.roncoo.pay.user.service.RpUserPayConfigService;
@@ -83,6 +85,8 @@ public class RegistrationController extends BaseController
     @RequestMapping(value = "/registration.html", method = {RequestMethod.POST, RequestMethod.GET})
     public String init(HttpServletRequest request, Model model)
     {
+        model.addAttribute("BankCodeEnums", BankCodeEnum.toList());
+        model.addAttribute("BankAccountTypeEnums", BankAccountTypeEnum.toList());
         
         return "system/registration_wizard";
     }
@@ -107,10 +111,10 @@ public class RegistrationController extends BaseController
             
             try
             {
-                 idCardFrontPath = getSaveFilePath(path, idCardFront);
-                 idCardBackPath = getSaveFilePath(path, idCardBack);
-                 bankCardFrontPath = getSaveFilePath(path, bankCardFront);
-                 personPhotoPath = getSaveFilePath(path, personPhoto);
+                 idCardFrontPath = getSaveFilePath(path, idCardFront,userNo);
+                 idCardBackPath = getSaveFilePath(path, idCardBack,userNo);
+                 bankCardFrontPath = getSaveFilePath(path, bankCardFront,userNo);
+                 personPhotoPath = getSaveFilePath(path, personPhoto,userNo);
             }
             catch (Exception e)
             {
@@ -126,12 +130,12 @@ public class RegistrationController extends BaseController
         merchantAccount.setBankCardFrontPath(bankCardFrontPath);
         merchantAccount.setPersonPhotoPath(personPhotoPath);
         
-        rpUserInfoService.registerByMerchant(merchantAccount, idCardFront, idCardBack, bankCardFront, personPhoto);
+        rpUserInfoService.registerByMerchant(merchantAccount);
         
         return "/login";
     }
     
-    private String getSaveFilePath(String fileCatage, CommonsMultipartFile multipartFile) throws Exception
+    private String getSaveFilePath(String fileCatage, CommonsMultipartFile multipartFile,String userNo) throws Exception
     {
         String fileName = multipartFile.getOriginalFilename();
         InputStream input = multipartFile.getInputStream();
@@ -161,7 +165,7 @@ public class RegistrationController extends BaseController
         input.close();  
         os.close(); 
         
-        return fileCatage + "/" + newFileName;
+        return "/statics/fileupload/" +userNo+ "/" + newFileName;
     }
     
     /**

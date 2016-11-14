@@ -88,6 +88,18 @@ public class MerchantAccount  extends RpUserInfo
     private File LEGAL_PERSON_BACK法人; //身份证背面;
     
     private String email;
+    
+    /** 银行卡开户所在省 **/
+    private String province;
+
+    /** 银行卡开户所在城市 **/
+    private String city;
+
+    /** 银行卡开户所在区 **/
+    private String areas;
+
+    /** 银行卡开户具体地址 **/
+    private String street;
     /**
      * 获取 accountname
      * @return 返回 accountname
@@ -424,6 +436,68 @@ public class MerchantAccount  extends RpUserInfo
     {
         this.idcard = idcard;
     }
-    
-    
+    /**
+     * 获取 province
+     * @return 返回 province
+     */
+    public String getProvince()
+    {
+        return province;
+    }
+    /**
+     * 设置 province
+     * @param 对province进行赋值
+     */
+    public void setProvince(String province)
+    {
+        this.province = province;
+    }
+    /**
+     * 获取 city
+     * @return 返回 city
+     */
+    public String getCity()
+    {
+        return city;
+    }
+    /**
+     * 设置 city
+     * @param 对city进行赋值
+     */
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+    /**
+     * 获取 areas
+     * @return 返回 areas
+     */
+    public String getAreas()
+    {
+        return areas;
+    }
+    /**
+     * 设置 areas
+     * @param 对areas进行赋值
+     */
+    public void setAreas(String areas)
+    {
+        this.areas = areas;
+    }
+    /**
+     * 获取 street
+     * @return 返回 street
+     */
+    public String getStreet()
+    {
+        return street;
+    }
+    /**
+     * 设置 street
+     * @param 对street进行赋值
+     */
+    public void setStreet(String street)
+    {
+        this.street = street;
+    }
 }

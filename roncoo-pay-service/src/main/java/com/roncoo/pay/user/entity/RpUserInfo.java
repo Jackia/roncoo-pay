@@ -48,6 +48,11 @@ public class RpUserInfo extends BaseEntity implements Serializable
     
     private String personPhotoPath;
     
+    /**
+     * 鑫中利 商户号
+     */
+    private String jimi_merchantid;
+    
     public String getMobile()
     {
         return mobile;
@@ -182,5 +187,22 @@ public class RpUserInfo extends BaseEntity implements Serializable
     {
         this.personPhotoPath = personPhotoPath;
     }
-    
+
+    /**
+     * 获取 jimi_merchantid
+     * @return 返回 jimi_merchantid
+     */
+    public String getJimi_merchantid()
+    {
+        return jimi_merchantid;
+    }
+
+    /**
+     * 设置 jimi_merchantid
+     * @param 对jimi_merchantid进行赋值
+     */
+    public void setJimi_merchantid(String jimi_merchantid)
+    {
+        this.jimi_merchantid = jimi_merchantid;
+    }
 }

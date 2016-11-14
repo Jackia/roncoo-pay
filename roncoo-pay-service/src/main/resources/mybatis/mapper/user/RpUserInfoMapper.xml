@@ -10,9 +10,15 @@
     <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    
+    <result column="idCardFrontPath" property="idCardFrontPath" jdbcType="VARCHAR" />
+    <result column="idCardBackPath" property="idCardBackPath" jdbcType="VARCHAR" />
+    <result column="bankCardFrontPath" property="bankCardFrontPath" jdbcType="VARCHAR" />
+    <result column="personPhotoPath" property="personPhotoPath" jdbcType="VARCHAR" />
+    <result column="jimi_merchantid" property="jimi_merchantid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, create_time, status, user_no, user_name, account_no
+    id, create_time, status, user_no, user_name, account_no,idCardFrontPath,idCardBackPath,bankCardFrontPath,personPhotoPath,jimi_merchantid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -26,11 +32,15 @@
   </delete>
   <insert id="insert" parameterType="com.roncoo.pay.user.entity.RpUserInfo" >
     insert into rp_user_info (id, create_time, status, 
-      user_no, user_name, account_no, mobile, password
+      user_no, user_name, account_no, mobile, password,
+      idCardFrontPath,idCardBackPath,bankCardFrontPath,
+      personPhotoPath,jimi_merchantid
       )
     values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
       #{userNo,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR},
-      #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+      #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{idCardFrontPath,jdbcType=VARCHAR}, 
+      #{idCardBackPath,jdbcType=VARCHAR}, #{bankCardFrontPath,jdbcType=VARCHAR}, 
+      #{personPhotoPath,jdbcType=VARCHAR}, #{jimi_merchantid,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -42,7 +52,12 @@
       user_name = #{userName,jdbcType=VARCHAR},
       account_no = #{accountNo,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
+      password = #{password,jdbcType=VARCHAR},
+      idCardFrontPath = #{idCardFrontPath,jdbcType=VARCHAR},
+      idCardBackPath = #{idCardBackPath,jdbcType=VARCHAR},
+      bankCardFrontPath = #{bankCardFrontPath,jdbcType=VARCHAR},
+      personPhotoPath = #{personPhotoPath,jdbcType=VARCHAR},
+      jimi_merchantid = #{jimi_merchantid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   

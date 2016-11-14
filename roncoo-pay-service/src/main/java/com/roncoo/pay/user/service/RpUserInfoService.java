@@ -82,8 +82,7 @@ public interface RpUserInfoService{
      *            密码
      * @return
      */
-    void registerByMerchant(MerchantAccount merchantAccount,CommonsMultipartFile idCardFront, CommonsMultipartFile idCardBack,
-        CommonsMultipartFile bankCardFront,  CommonsMultipartFile personPhoto) ;
+    void registerByMerchant(MerchantAccount merchantAccount) ;
 
 	/**
 	 * 根据商户编号获取商户信息
