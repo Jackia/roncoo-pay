@@ -27,408 +27,33 @@ public class Submarchant implements Serializable
      */
     private static final long serialVersionUID = -4747074629167758465L;
     
-    /**
-     * 商户注册请求号，注册请求号   N   MAX(50) 商户注册请求号
-     */
-    private String requestid = "";
+    private String platform_code;        //字符串 是   机构号
+    private String merchant_code;        //字符串 是   渠道自定义商户号编号
+    private String merchant_name;        //字符串 是   商户全称（同营业执照）
+    private String merchant_short_name;        //字符串 是   商户简称
+    private String is_cert;        // 字符串 是   是否有证
+    private String license_no;        //  字符串 是   营业执照号
+    private String license_expire_dt;        //   字符串 否   执照有效期
+    private String wx_industry_id;        //  字符串 否   微信商户类别
+    private String ali_industry_id;        // 字符串 否   支付宝商户类别
+    private String legal_name;        //  字符串 是   法人姓名
+    private String id_number;        //   字符串 是   身份证号
+    private String phone_no;        //    字符串 是   手机号
+    private String province;        //    字符串 是   省
+    private String city;        //    字符串 是   市
+    private String merchant_address;        //字符串 是   经营地址
+    private String settlement_type;        //字符串 是   清算周期（T0、T1），低于10块钱默认T1
+    private String wx_rate;        //字符串 是   微信费率 例如：0.004
+    private String ali_rate;        //字符串 是   支付宝费率 例如：0.004 
+    private String out_fee;        //字符串 否   出款手续费（笔）例如：0.8元
+    private String acct_name;        //字符串 是   开户名
+    private String bank_card_no;        //字符串 是   银行卡号
+    private String bank_name;        //字符串 是   开户行
+    private String bank_sub_name;        //字符串 是   开户行支行名称
+    private String bank_unionpay_code;        //字符串 否   联行号
+    private String sign;        //字符串 是   
     
-    /**
-     * 银行卡 bankaccountnumber 对应的开户名
-     */
-    private String accountname = "";
-    
-    /**
-     * PrivateCash：对私
-     */
-    private String bankaccounttype = "";
-    
-    /**
-     *  银行卡号    N   MAX(20) 银行卡号
-     */
-    private String bankaccountnumber = "";
-    
-    /**
-     * 开户区/县   N   MAX(6)  银行卡开户区/县6位地区代码
-     */
-    private String bankarea = "";
-    
-    /**
-     * 开户市 N   MAX(6)  银行卡开户市6位地区代码
-     */
-    private String bankcity = "";
-    
-    /**
-     * 银行卡开户行，总行名称 N   MAX(20) 工商银行、农业银行、招商 银行、建设银行、
-     * 交通银行、中信银行、光大银行、北京银行、深圳发展银行、中国 银行、兴业银行、
-     * 民生银行、华夏银行等
-     */
-    private String bankheadofficename = "";
-    
-    /**
-     *  银行卡开户所在支行   N   MAX(50) 银行卡开户的支行名称
-     */
-    private String bankname = "";
-    
-    /**
-     * 开户省 N   MAX(6)  银行卡开户省6位地区代码
-     */
-    private String bankprovince = "";
-    
-    /**
-     * 绑定手机    N   MAX(11) 11 位的手机号
-     */
-    private String bindmobile = "";
-    
-    /**
-     * 后台通知地址  N   MAX(255)    审核结果，回调通知地址
-     */
-    private String callbackurl = "";
-    
-    /**
-     * PERSON ：个人，商户类型    N   MAX(10) PERSON ：个人
-     */
-    private String customertype = "";
-    
-    /**
-     * 保证金 N   MAX(10) 单位：分 
-     * 保证金仅会影响到商户的出款金额：可用于出款的金额 = 账户余额 – 保证金
-     */
-    private String deposit = "";
-    
-    /**
-     * 身份证 N   MAX(18) 身份证号码
-     */
-    private String idcard = "";
-    
-    /**
-     * 联系人 N   MAX(20) 联系人姓名
-     */
-    private String linkman = "";
-    
-    /**
-     * 商户起始结算金额，大于0的整数，单位：分。
-     */
-    private String minsettleamount = "";
-    
-    /**
-     * 平台码 N   MAX(18) 鑫中利平台码
-     */
-    private String platform_code = "";
-    
-    /**
-     * 签约名 N   MAX(30) 个人时，填写姓名
-     */
-    private String signedname = "";
-    
-    
-    /**
-     * 营业执照号.营业执照号       MAX(30) 营业执照号
-     */
-    private String businesslicence;
-    
-    /**
-     * 法人名称,法人名称        MAX(10) 企业的法人姓名
-     */
-    private String legalperson;
-    
-    /**
-     * 法人身份证号,法人身份证号      MAX(18) 法人身份证号
-     */
-    private String legalpersonidcard;
-    
-    /**
-     * 签名密钥
-     */
-    private String key="";
-
-    /**
-     * 获取 requestid
-     * @return 返回 requestid
-     */
-    public String getRequestid()
-    {
-        return requestid;
-    }
-
-    /**
-     * 设置 requestid
-     * @param 对requestid进行赋值
-     */
-    public void setRequestid(String requestid)
-    {
-        this.requestid = requestid;
-    }
-
-    /**
-     * 获取 accountname
-     * @return 返回 accountname
-     */
-    public String getAccountname()
-    {
-        return accountname;
-    }
-
-    /**
-     * 设置 accountname
-     * @param 对accountname进行赋值
-     */
-    public void setAccountname(String accountname)
-    {
-        this.accountname = accountname;
-    }
-
-    /**
-     * 获取 bankaccounttype
-     * @return 返回 bankaccounttype
-     */
-    public String getBankaccounttype()
-    {
-        return bankaccounttype;
-    }
-
-    /**
-     * 设置 bankaccounttype
-     * @param 对bankaccounttype进行赋值
-     */
-    public void setBankaccounttype(String bankaccounttype)
-    {
-        this.bankaccounttype = bankaccounttype;
-    }
-
-    /**
-     * 获取 bankaccountnumber
-     * @return 返回 bankaccountnumber
-     */
-    public String getBankaccountnumber()
-    {
-        return bankaccountnumber;
-    }
-
-    /**
-     * 设置 bankaccountnumber
-     * @param 对bankaccountnumber进行赋值
-     */
-    public void setBankaccountnumber(String bankaccountnumber)
-    {
-        this.bankaccountnumber = bankaccountnumber;
-    }
-
-    /**
-     * 获取 bankarea
-     * @return 返回 bankarea
-     */
-    public String getBankarea()
-    {
-        return bankarea;
-    }
-
-    /**
-     * 设置 bankarea
-     * @param 对bankarea进行赋值
-     */
-    public void setBankarea(String bankarea)
-    {
-        this.bankarea = bankarea;
-    }
-
-    /**
-     * 获取 bankcity
-     * @return 返回 bankcity
-     */
-    public String getBankcity()
-    {
-        return bankcity;
-    }
-
-    /**
-     * 设置 bankcity
-     * @param 对bankcity进行赋值
-     */
-    public void setBankcity(String bankcity)
-    {
-        this.bankcity = bankcity;
-    }
-
-    /**
-     * 获取 bankheadofficename
-     * @return 返回 bankheadofficename
-     */
-    public String getBankheadofficename()
-    {
-        return bankheadofficename;
-    }
-
-    /**
-     * 设置 bankheadofficename
-     * @param 对bankheadofficename进行赋值
-     */
-    public void setBankheadofficename(String bankheadofficename)
-    {
-        this.bankheadofficename = bankheadofficename;
-    }
-
-    /**
-     * 获取 bankname
-     * @return 返回 bankname
-     */
-    public String getBankname()
-    {
-        return bankname;
-    }
-
-    /**
-     * 设置 bankname
-     * @param 对bankname进行赋值
-     */
-    public void setBankname(String bankname)
-    {
-        this.bankname = bankname;
-    }
-
-    /**
-     * 获取 bankprovince
-     * @return 返回 bankprovince
-     */
-    public String getBankprovince()
-    {
-        return bankprovince;
-    }
-
-    /**
-     * 设置 bankprovince
-     * @param 对bankprovince进行赋值
-     */
-    public void setBankprovince(String bankprovince)
-    {
-        this.bankprovince = bankprovince;
-    }
-
-    /**
-     * 获取 bindmobile
-     * @return 返回 bindmobile
-     */
-    public String getBindmobile()
-    {
-        return bindmobile;
-    }
-
-    /**
-     * 设置 bindmobile
-     * @param 对bindmobile进行赋值
-     */
-    public void setBindmobile(String bindmobile)
-    {
-        this.bindmobile = bindmobile;
-    }
-
-    /**
-     * 获取 callbackurl
-     * @return 返回 callbackurl
-     */
-    public String getCallbackurl()
-    {
-        return callbackurl;
-    }
-
-    /**
-     * 设置 callbackurl
-     * @param 对callbackurl进行赋值
-     */
-    public void setCallbackurl(String callbackurl)
-    {
-        this.callbackurl = callbackurl;
-    }
-
-    /**
-     * 获取 customertype
-     * @return 返回 customertype
-     */
-    public String getCustomertype()
-    {
-        return customertype;
-    }
-
-    /**
-     * 设置 customertype
-     * @param 对customertype进行赋值
-     */
-    public void setCustomertype(String customertype)
-    {
-        this.customertype = customertype;
-    }
-
-    /**
-     * 获取 deposit
-     * @return 返回 deposit
-     */
-    public String getDeposit()
-    {
-        return deposit;
-    }
-
-    /**
-     * 设置 deposit
-     * @param 对deposit进行赋值
-     */
-    public void setDeposit(String deposit)
-    {
-        this.deposit = deposit;
-    }
-
-    /**
-     * 获取 idcard
-     * @return 返回 idcard
-     */
-    public String getIdcard()
-    {
-        return idcard;
-    }
-
-    /**
-     * 设置 idcard
-     * @param 对idcard进行赋值
-     */
-    public void setIdcard(String idcard)
-    {
-        this.idcard = idcard;
-    }
-
-    /**
-     * 获取 linkman
-     * @return 返回 linkman
-     */
-    public String getLinkman()
-    {
-        return linkman;
-    }
-
-    /**
-     * 设置 linkman
-     * @param 对linkman进行赋值
-     */
-    public void setLinkman(String linkman)
-    {
-        this.linkman = linkman;
-    }
-
-    /**
-     * 获取 minsettleamount
-     * @return 返回 minsettleamount
-     */
-    public String getMinsettleamount()
-    {
-        return minsettleamount;
-    }
-
-    /**
-     * 设置 minsettleamount
-     * @param 对minsettleamount进行赋值
-     */
-    public void setMinsettleamount(String minsettleamount)
-    {
-        this.minsettleamount = minsettleamount;
-    }
-
+    private String key;
     /**
      * 获取 platform_code
      * @return 返回 platform_code
@@ -437,7 +62,6 @@ public class Submarchant implements Serializable
     {
         return platform_code;
     }
-
     /**
      * 设置 platform_code
      * @param 对platform_code进行赋值
@@ -446,79 +70,390 @@ public class Submarchant implements Serializable
     {
         this.platform_code = platform_code;
     }
-
     /**
-     * 获取 signedname
-     * @return 返回 signedname
+     * 获取 merchant_code
+     * @return 返回 merchant_code
      */
-    public String getSignedname()
+    public String getMerchant_code()
     {
-        return signedname;
+        return merchant_code;
     }
-
     /**
-     * 设置 signedname
-     * @param 对signedname进行赋值
+     * 设置 merchant_code
+     * @param 对merchant_code进行赋值
      */
-    public void setSignedname(String signedname)
+    public void setMerchant_code(String merchant_code)
     {
-        this.signedname = signedname;
+        this.merchant_code = merchant_code;
     }
-
     /**
-     * 获取 businesslicence
-     * @return 返回 businesslicence
+     * 获取 merchant_name
+     * @return 返回 merchant_name
      */
-    public String getBusinesslicence()
+    public String getMerchant_name()
     {
-        return businesslicence;
+        return merchant_name;
     }
-
     /**
-     * 设置 businesslicence
-     * @param 对businesslicence进行赋值
+     * 设置 merchant_name
+     * @param 对merchant_name进行赋值
      */
-    public void setBusinesslicence(String businesslicence)
+    public void setMerchant_name(String merchant_name)
     {
-        this.businesslicence = businesslicence;
+        this.merchant_name = merchant_name;
     }
-
     /**
-     * 获取 legalperson
-     * @return 返回 legalperson
+     * 获取 merchant_short_name
+     * @return 返回 merchant_short_name
      */
-    public String getLegalperson()
+    public String getMerchant_short_name()
     {
-        return legalperson;
+        return merchant_short_name;
     }
-
     /**
-     * 设置 legalperson
-     * @param 对legalperson进行赋值
+     * 设置 merchant_short_name
+     * @param 对merchant_short_name进行赋值
      */
-    public void setLegalperson(String legalperson)
+    public void setMerchant_short_name(String merchant_short_name)
     {
-        this.legalperson = legalperson;
+        this.merchant_short_name = merchant_short_name;
     }
-
     /**
-     * 获取 legalpersonidcard
-     * @return 返回 legalpersonidcard
+     * 获取 is_cert
+     * @return 返回 is_cert
      */
-    public String getLegalpersonidcard()
+    public String getIs_cert()
     {
-        return legalpersonidcard;
+        return is_cert;
     }
-
     /**
-     * 设置 legalpersonidcard
-     * @param 对legalpersonidcard进行赋值
+     * 设置 is_cert
+     * @param 对is_cert进行赋值
      */
-    public void setLegalpersonidcard(String legalpersonidcard)
+    public void setIs_cert(String is_cert)
     {
-        this.legalpersonidcard = legalpersonidcard;
+        this.is_cert = is_cert;
     }
-
+    /**
+     * 获取 license_no
+     * @return 返回 license_no
+     */
+    public String getLicense_no()
+    {
+        return license_no;
+    }
+    /**
+     * 设置 license_no
+     * @param 对license_no进行赋值
+     */
+    public void setLicense_no(String license_no)
+    {
+        this.license_no = license_no;
+    }
+    /**
+     * 获取 license_expire_dt
+     * @return 返回 license_expire_dt
+     */
+    public String getLicense_expire_dt()
+    {
+        return license_expire_dt;
+    }
+    /**
+     * 设置 license_expire_dt
+     * @param 对license_expire_dt进行赋值
+     */
+    public void setLicense_expire_dt(String license_expire_dt)
+    {
+        this.license_expire_dt = license_expire_dt;
+    }
+    /**
+     * 获取 wx_industry_id
+     * @return 返回 wx_industry_id
+     */
+    public String getWx_industry_id()
+    {
+        return wx_industry_id;
+    }
+    /**
+     * 设置 wx_industry_id
+     * @param 对wx_industry_id进行赋值
+     */
+    public void setWx_industry_id(String wx_industry_id)
+    {
+        this.wx_industry_id = wx_industry_id;
+    }
+    /**
+     * 获取 ali_industry_id
+     * @return 返回 ali_industry_id
+     */
+    public String getAli_industry_id()
+    {
+        return ali_industry_id;
+    }
+    /**
+     * 设置 ali_industry_id
+     * @param 对ali_industry_id进行赋值
+     */
+    public void setAli_industry_id(String ali_industry_id)
+    {
+        this.ali_industry_id = ali_industry_id;
+    }
+    /**
+     * 获取 legal_name
+     * @return 返回 legal_name
+     */
+    public String getLegal_name()
+    {
+        return legal_name;
+    }
+    /**
+     * 设置 legal_name
+     * @param 对legal_name进行赋值
+     */
+    public void setLegal_name(String legal_name)
+    {
+        this.legal_name = legal_name;
+    }
+    /**
+     * 获取 id_number
+     * @return 返回 id_number
+     */
+    public String getId_number()
+    {
+        return id_number;
+    }
+    /**
+     * 设置 id_number
+     * @param 对id_number进行赋值
+     */
+    public void setId_number(String id_number)
+    {
+        this.id_number = id_number;
+    }
+    /**
+     * 获取 phone_no
+     * @return 返回 phone_no
+     */
+    public String getPhone_no()
+    {
+        return phone_no;
+    }
+    /**
+     * 设置 phone_no
+     * @param 对phone_no进行赋值
+     */
+    public void setPhone_no(String phone_no)
+    {
+        this.phone_no = phone_no;
+    }
+    /**
+     * 获取 province
+     * @return 返回 province
+     */
+    public String getProvince()
+    {
+        return province;
+    }
+    /**
+     * 设置 province
+     * @param 对province进行赋值
+     */
+    public void setProvince(String province)
+    {
+        this.province = province;
+    }
+    /**
+     * 获取 city
+     * @return 返回 city
+     */
+    public String getCity()
+    {
+        return city;
+    }
+    /**
+     * 设置 city
+     * @param 对city进行赋值
+     */
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+    /**
+     * 获取 merchant_address
+     * @return 返回 merchant_address
+     */
+    public String getMerchant_address()
+    {
+        return merchant_address;
+    }
+    /**
+     * 设置 merchant_address
+     * @param 对merchant_address进行赋值
+     */
+    public void setMerchant_address(String merchant_address)
+    {
+        this.merchant_address = merchant_address;
+    }
+    /**
+     * 获取 settlement_type
+     * @return 返回 settlement_type
+     */
+    public String getSettlement_type()
+    {
+        return settlement_type;
+    }
+    /**
+     * 设置 settlement_type
+     * @param 对settlement_type进行赋值
+     */
+    public void setSettlement_type(String settlement_type)
+    {
+        this.settlement_type = settlement_type;
+    }
+    /**
+     * 获取 wx_rate
+     * @return 返回 wx_rate
+     */
+    public String getWx_rate()
+    {
+        return wx_rate;
+    }
+    /**
+     * 设置 wx_rate
+     * @param 对wx_rate进行赋值
+     */
+    public void setWx_rate(String wx_rate)
+    {
+        this.wx_rate = wx_rate;
+    }
+    /**
+     * 获取 ali_rate
+     * @return 返回 ali_rate
+     */
+    public String getAli_rate()
+    {
+        return ali_rate;
+    }
+    /**
+     * 设置 ali_rate
+     * @param 对ali_rate进行赋值
+     */
+    public void setAli_rate(String ali_rate)
+    {
+        this.ali_rate = ali_rate;
+    }
+    /**
+     * 获取 out_fee
+     * @return 返回 out_fee
+     */
+    public String getOut_fee()
+    {
+        return out_fee;
+    }
+    /**
+     * 设置 out_fee
+     * @param 对out_fee进行赋值
+     */
+    public void setOut_fee(String out_fee)
+    {
+        this.out_fee = out_fee;
+    }
+    /**
+     * 获取 acct_name
+     * @return 返回 acct_name
+     */
+    public String getAcct_name()
+    {
+        return acct_name;
+    }
+    /**
+     * 设置 acct_name
+     * @param 对acct_name进行赋值
+     */
+    public void setAcct_name(String acct_name)
+    {
+        this.acct_name = acct_name;
+    }
+    /**
+     * 获取 bank_card_no
+     * @return 返回 bank_card_no
+     */
+    public String getBank_card_no()
+    {
+        return bank_card_no;
+    }
+    /**
+     * 设置 bank_card_no
+     * @param 对bank_card_no进行赋值
+     */
+    public void setBank_card_no(String bank_card_no)
+    {
+        this.bank_card_no = bank_card_no;
+    }
+    /**
+     * 获取 bank_name
+     * @return 返回 bank_name
+     */
+    public String getBank_name()
+    {
+        return bank_name;
+    }
+    /**
+     * 设置 bank_name
+     * @param 对bank_name进行赋值
+     */
+    public void setBank_name(String bank_name)
+    {
+        this.bank_name = bank_name;
+    }
+    /**
+     * 获取 bank_sub_name
+     * @return 返回 bank_sub_name
+     */
+    public String getBank_sub_name()
+    {
+        return bank_sub_name;
+    }
+    /**
+     * 设置 bank_sub_name
+     * @param 对bank_sub_name进行赋值
+     */
+    public void setBank_sub_name(String bank_sub_name)
+    {
+        this.bank_sub_name = bank_sub_name;
+    }
+    /**
+     * 获取 bank_unionpay_code
+     * @return 返回 bank_unionpay_code
+     */
+    public String getBank_unionpay_code()
+    {
+        return bank_unionpay_code;
+    }
+    /**
+     * 设置 bank_unionpay_code
+     * @param 对bank_unionpay_code进行赋值
+     */
+    public void setBank_unionpay_code(String bank_unionpay_code)
+    {
+        this.bank_unionpay_code = bank_unionpay_code;
+    }
+    /**
+     * 获取 sign
+     * @return 返回 sign
+     */
+    public String getSign()
+    {
+        return sign;
+    }
+    /**
+     * 设置 sign
+     * @param 对sign进行赋值
+     */
+    public void setSign(String sign)
+    {
+        this.sign = sign;
+    }
     /**
      * 获取 key
      * @return 返回 key
@@ -527,7 +462,6 @@ public class Submarchant implements Serializable
     {
         return key;
     }
-
     /**
      * 设置 key
      * @param 对key进行赋值
@@ -536,5 +470,4 @@ public class Submarchant implements Serializable
     {
         this.key = key;
     }
-    
 }

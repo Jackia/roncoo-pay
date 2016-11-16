@@ -45,7 +45,7 @@ public final class XzlPayAPI
     {
         String sign = DigestUtils.md5Hex(XZLStringUtils.payOrder(payInfo)).toUpperCase();
         Map<String, Object> paramMap = XZLStringUtils.payOrder(payInfo, sign);
-        String pos= HttpUtils.sendToServer(EndpointConfig.XZL_PAY_T0,paramMap,"utf-8");
+        String pos= HttpUtils.sendToServer(EndpointConfig.XZL_PAY,paramMap,"utf-8");
         System.out.println("test-------- "+ pos);
         
         return (XzlResponse)XZLStringUtils.getEntityFromString(XzlResponse.class, pos);
@@ -71,16 +71,16 @@ public final class XzlPayAPI
         String key="c04f33a33a6a4faea047b8c247e9ef53f6964d6b789a47fb8f28+z.1230e5732e6";
         
         PayInfo payInfo = new PayInfo();
-        payInfo.setTradeamt(tradeamt);
-        payInfo.setMerchantid(merchantid);
-        payInfo.setOrderid(orderid);
-        payInfo.setBackurl(callbackurl);
-        payInfo.setCallbackurl(callbackurl);
-        payInfo.setPay_type(pay_type);
-        payInfo.setManualsettle(manualsettle);
-        payInfo.setOrderInfo(orderInfo);
-        payInfo.setSettlement_type(settlement_type);
-        payInfo.setPlatform_code(platform_code);
+//        payInfo.setTradeamt(tradeamt);
+//        payInfo.setMerchantid(merchantid);
+//        payInfo.setOrderid(orderid);
+//        payInfo.setBackurl(callbackurl);
+//        payInfo.setCallbackurl(callbackurl);
+//        payInfo.setPay_type(pay_type);
+//        payInfo.setManualsettle(manualsettle);
+//        payInfo.setOrderInfo(orderInfo);
+//        payInfo.setSettlement_type(settlement_type);
+//        payInfo.setPlatform_code(platform_code);
         payInfo.setKey(key);
         
         pay(payInfo);

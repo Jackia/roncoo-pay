@@ -866,25 +866,24 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 ChannelInfo channelInfo = channelService.listByChannelNo(channelNo);
                 PayInfo payInfo = new PayInfo();
                 String tradeamt = String.valueOf(rpTradePaymentOrder.getOrderAmount());
-                tradeamt = "10";
                 String merchantid = "000000061";
                 
                 String orderid = rpTradePaymentOrder.getMerchantOrderNo();
                 
                 String callbackurl = rpTradePaymentOrder.getReturnUrl();
-                String pay_type = "123";
+                String pay_type = "120";
                 String manualsettle = "1";
                 
-                String orderInfo = rpTradePaymentOrder.getMerchantName();
+//                String orderInfo = rpTradePaymentOrder.getMerchantName();
+                String orderInfo = "Lenovoi7";
                 String settlement_type = "130";
-                payInfo.setTradeamt(tradeamt);
-                payInfo.setMerchantid(merchantid);
-                payInfo.setOrderid(orderid);
-                payInfo.setBackurl(callbackurl);
-                payInfo.setCallbackurl(callbackurl);
+                payInfo.setTrade_amount(tradeamt);
+                payInfo.setMerchant_no(merchantid);
+                payInfo.setOrder_id(orderid);
+                payInfo.setReturn_url(callbackurl);
                 payInfo.setPay_type(pay_type);
-                payInfo.setManualsettle(manualsettle);
-                payInfo.setOrderInfo(orderInfo);
+//                payInfo.setManualsettle(manualsettle);
+                payInfo.setGoods_name(orderInfo);
                 payInfo.setSettlement_type(settlement_type);
                 payInfo.setPlatform_code(channelInfo.getPlatform_code());
                 payInfo.setKey(channelInfo.getChannel_key());
@@ -894,7 +893,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
+                    throw new TradeBizException(TradeBizException.TRADE_ORDER_ERROR, "请求订单异常");
                 }
                 
             }
@@ -928,7 +927,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
 //                        partnerKey);
 //                String codeUrl = String.valueOf(prePayRequest.get("code_url"));
             
-            String codeUrl = response.getCode_url();
+            String codeUrl = response.getQrcode_url();
                 LOG.info("预支付生成成功,{}", codeUrl);
 //                if (prePayRequest.get("sign").equals(weiXinPrePaySign))
                 if(codeUrl != null)

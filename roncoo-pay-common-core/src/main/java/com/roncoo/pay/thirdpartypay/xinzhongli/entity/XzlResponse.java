@@ -33,118 +33,65 @@ public class XzlResponse implements Serializable
     /**
      * 返回码
      */
-    private String code;
+    private String response_code;
     
-    /**
-     * 商户编码
-     */
-    private String merchantid;
-    
-    /**
-     * 信息描述
-     */
-    private String msg;
-    
-    /**
-     * 商户信息是否完整
-     */
-    private String complete;
+//    /**
+//     * 商户编码
+//     */
+//    private String merchantid;
+//    
+//    /**
+//     * 信息描述
+//     */
+//    private String msg;
+//    
+//    /**
+//     * 商户信息是否完整
+//     */
+//    private String complete;
     
     /**
      * 交易流水
      */
     private String transaction_id;
     
-    /**
-     * 实际打款金额
-     */
-    private String actualamt;
+//    /**
+//     * 实际打款金额
+//     */
+//    private String actualamt;
     
     /**
      * 微信地址
      */
-    private String code_url;
+    private String qrcode_url;
     
     /**
      * 订单号
      */
-    private String out_trade_no;
+    private String orderId;
     /**
      * 交易金额
      */
     private String tradeamt;
     
+    private String message;
 
     /**
-     * 获取 code
-     * @return 返回 code
+     * 获取 response_code
+     * @return 返回 response_code
      */
-    public String getCode()
+    public String getResponse_code()
     {
-        return code;
+        return response_code;
     }
 
     /**
-     * 设置 code
-     * @param 对code进行赋值
+     * 设置 response_code
+     * @param 对response_code进行赋值
      */
-    public void setCode(String code)
+    public void setResponse_code(String response_code)
     {
-        this.code = code;
-    }
-
-    /**
-     * 获取 merchantid
-     * @return 返回 merchantid
-     */
-    public String getMerchantid()
-    {
-        return merchantid;
-    }
-
-    /**
-     * 设置 merchantid
-     * @param 对merchantid进行赋值
-     */
-    public void setMerchantid(String merchantid)
-    {
-        this.merchantid = merchantid;
-    }
-
-    /**
-     * 获取 msg
-     * @return 返回 msg
-     */
-    public String getMsg()
-    {
-        return msg;
-    }
-
-    /**
-     * 设置 msg
-     * @param 对msg进行赋值
-     */
-    public void setMsg(String msg)
-    {
-        this.msg = msg;
-    }
-
-    /**
-     * 获取 complete
-     * @return 返回 complete
-     */
-    public String getComplete()
-    {
-        return complete;
-    }
-
-    /**
-     * 设置 complete
-     * @param 对complete进行赋值
-     */
-    public void setComplete(String complete)
-    {
-        this.complete = complete;
+        this.response_code = response_code;
     }
 
     /**
@@ -166,57 +113,39 @@ public class XzlResponse implements Serializable
     }
 
     /**
-     * 获取 actualamt
-     * @return 返回 actualamt
+     * 获取 qrcode_url
+     * @return 返回 qrcode_url
      */
-    public String getActualamt()
+    public String getQrcode_url()
     {
-        return actualamt;
+        return qrcode_url;
     }
 
     /**
-     * 设置 actualamt
-     * @param 对actualamt进行赋值
+     * 设置 qrcode_url
+     * @param 对qrcode_url进行赋值
      */
-    public void setActualamt(String actualamt)
+    public void setQrcode_url(String qrcode_url)
     {
-        this.actualamt = actualamt;
+        this.qrcode_url = qrcode_url;
     }
 
     /**
-     * 获取 code_url
-     * @return 返回 code_url
+     * 获取 orderId
+     * @return 返回 orderId
      */
-    public String getCode_url()
+    public String getOrderId()
     {
-        return code_url;
+        return orderId;
     }
 
     /**
-     * 设置 code_url
-     * @param 对code_url进行赋值
+     * 设置 orderId
+     * @param 对orderId进行赋值
      */
-    public void setCode_url(String code_url)
+    public void setOrderId(String orderId)
     {
-        this.code_url = code_url;
-    }
-
-    /**
-     * 获取 out_trade_no
-     * @return 返回 out_trade_no
-     */
-    public String getOut_trade_no()
-    {
-        return out_trade_no;
-    }
-
-    /**
-     * 设置 out_trade_no
-     * @param 对out_trade_no进行赋值
-     */
-    public void setOut_trade_no(String out_trade_no)
-    {
-        this.out_trade_no = out_trade_no;
+        this.orderId = orderId;
     }
 
     /**
@@ -236,4 +165,26 @@ public class XzlResponse implements Serializable
     {
         this.tradeamt = tradeamt;
     }
+
+    /**
+     * 获取 message
+     * @return 返回 message
+     */
+    public String getMessage()
+    {
+        return message;
+    }
+
+    /**
+     * 设置 message
+     * @param 对message进行赋值
+     */
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
+    
+    
+    
+    
 }
