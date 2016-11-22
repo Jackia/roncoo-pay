@@ -1058,7 +1058,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         
         else if (FundInfoTypeEnum.XINZHONGLI_RECEIVES.name().equals(fundIntoType))
         {// TODO 改造里面的参数
-            partnerKey = WeixinConfigUtil.readConfig("partnerKey");
+//            partnerKey = WeixinConfigUtil.readConfig("partnerKey");
             
             RpUserPayConfig rpUserPayConfig = rpUserPayConfigService.getByUserNo(merchantNo);
             if (rpUserPayConfig == null)
@@ -1080,18 +1080,18 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         if (PayWayEnum.WEIXIN.name().equals(payWayCode))
         {
             String sign = notifyMap.remove("sign");
-            if (WeiXinPayUtils.notifySign(notifyMap, sign, partnerKey))
-            {// 根据配置信息验证签名
-                if (WeixinTradeStateEnum.SUCCESS.name().equals(notifyMap.get("result_code")))
+//            if (WeiXinPayUtils.notifySign(notifyMap, sign, partnerKey))
+//            {// 根据配置信息验证签名
+                if ("00".equals(notifyMap.get("response_code")))
                 {// 业务结果 成功
-                    String timeEndStr = notifyMap.get("time_end");
+                    String timeEndStr = notifyMap.get("trans_time");
                     Date timeEnd = null;
                     if (!StringUtil.isEmpty(timeEndStr))
                     {
                         timeEnd = DateUtils.getDateFromString(timeEndStr, "yyyyMMddHHmmss");// 订单支付完成时间
                     }
                     completeSuccessOrder(rpTradePaymentRecord,
-                        notifyMap.get("transaction_id"),
+                        notifyMap.get("tradetrace"),
                         timeEnd,
                         notifyMap.toString());
                     returnStr =
@@ -1102,11 +1102,11 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 {
                     completeFailOrder(rpTradePaymentRecord, notifyMap.toString());
                 }
-            }
-            else
-            {
-                throw new TradeBizException(TradeBizException.TRADE_WEIXIN_ERROR, "微信签名失败");
-            }
+//            }
+//            else
+//            {
+//                throw new TradeBizException(TradeBizException.TRADE_WEIXIN_ERROR, "微信签名失败");
+//            }
             
         }
         else if (PayWayEnum.ALIPAY.name().equals(payWayCode))
