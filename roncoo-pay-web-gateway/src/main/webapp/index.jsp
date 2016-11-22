@@ -7,7 +7,7 @@
         	alert(jsonData)
         $.ajax({ 
             type:"POST", 
-            url:"http://160066vd23.51mypc.cn/roncoo-pay-web-gateway/scanPayNotify/notify/WEIXIN", 
+            url:"http://160066vd23.51mypc.cn/roncoo-pay-web-gateway/scanPayNotify/notify/JIMI_WEIXIN", 
             dataType:"text",      
             contentType:"application/json",               
             data:jsonData, 
