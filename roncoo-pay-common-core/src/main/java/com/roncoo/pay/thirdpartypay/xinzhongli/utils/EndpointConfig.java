@@ -21,6 +21,7 @@ public interface EndpointConfig
 {
     public static String URL_PREFIX = "http://ewm.qiantangchina.cc/";
     
+    public static String XZL_SUBMERCHANT_REGISTER = URL_PREFIX + "wwPayController/xzl_Ry_Reg.do";
     
     public static String XZL_PAY = URL_PREFIX + "wwPayController/xzl_Pay.do";
     

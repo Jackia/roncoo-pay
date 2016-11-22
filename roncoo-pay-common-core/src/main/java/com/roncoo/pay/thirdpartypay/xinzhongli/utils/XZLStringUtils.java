@@ -164,7 +164,9 @@ public class XZLStringUtils
         sbs.append(submarchant.getProvince());
         
         //名称不一致
-        sbs.append("&settle_type=");
+//        sbs.append("&settle_type=");
+        sbs.append("&settlement_type=");
+        
         sbs.append(submarchant.getSettlement_type());
         sbs.append("&wx_industry_id=");
         sbs.append(submarchant.getWx_industry_id());
@@ -208,7 +210,7 @@ public class XZLStringUtils
         paramMap.put("phone_no",submarchant.getPhone_no());
         paramMap.put("platform_code",submarchant.getPlatform_code());
         paramMap.put("province",submarchant.getProvince());
-        paramMap.put("settle_type",submarchant.getSettlement_type());
+        paramMap.put("settlement_type",submarchant.getSettlement_type());
         paramMap.put("wx_industry_id",submarchant.getWx_industry_id());
         paramMap.put("wx_rate",submarchant.getWx_rate());
         

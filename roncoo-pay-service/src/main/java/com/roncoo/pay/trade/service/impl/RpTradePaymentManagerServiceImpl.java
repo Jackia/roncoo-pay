@@ -866,7 +866,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 ChannelInfo channelInfo = channelService.listByChannelNo(channelNo);
                 PayInfo payInfo = new PayInfo();
                 String tradeamt = String.valueOf(rpTradePaymentOrder.getOrderAmount());
-                String merchantid = "000000061";
+                String merchantid = "105799954663750238208";
                 
                 String orderid = rpTradePaymentOrder.getMerchantOrderNo();
                 
@@ -1002,7 +1002,16 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         LOG.info("接收到{}支付结果{}", payWayCode, notifyMap);
         
         String returnStr = null;
-        String bankOrderNo = notifyMap.get("out_trade_no");
+        String bankOrderNo = null;
+        if(PayWayEnum.JIMI_WEIXIN.name().equals(payWayCode))
+        {
+            bankOrderNo = notifyMap.get("orderid");
+        }
+        else
+        {
+            bankOrderNo = notifyMap.get("out_trade_no");
+        }
+            
         // 根据银行订单号获取支付信息
         RpTradePaymentRecord rpTradePaymentRecord = rpTradePaymentRecordDao.getByBankOrderNo(bankOrderNo);
         if (rpTradePaymentRecord == null)
@@ -1046,6 +1055,27 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 throw new UserBizException(UserBizException.USER_PAY_CONFIG_ERRPR, "用户支付配置有误");
             }
         }
+        
+        else if (FundInfoTypeEnum.XINZHONGLI_RECEIVES.name().equals(fundIntoType))
+        {// TODO 改造里面的参数
+            partnerKey = WeixinConfigUtil.readConfig("partnerKey");
+            
+            RpUserPayConfig rpUserPayConfig = rpUserPayConfigService.getByUserNo(merchantNo);
+            if (rpUserPayConfig == null)
+            {
+                throw new UserBizException(UserBizException.USER_PAY_CONFIG_ERRPR, "用户支付配置有误");
+            }
+            // 根据支付产品及支付方式获取费率
+            RpPayWay payWay =
+                rpPayWayService.getByPayWayTypeCode(rpUserPayConfig.getProductCode(),
+                    rpTradePaymentRecord.getPayWayCode(),
+                    rpTradePaymentRecord.getPayTypeCode());
+            if (payWay == null)
+            {
+                throw new UserBizException(UserBizException.USER_PAY_CONFIG_ERRPR, "用户支付配置有误");
+            }
+        }
+        
         
         if (PayWayEnum.WEIXIN.name().equals(payWayCode))
         {

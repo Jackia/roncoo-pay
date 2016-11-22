@@ -31,6 +31,14 @@ public class Submarchant implements Serializable
     private String merchant_code;        //字符串 是   渠道自定义商户号编号
     private String merchant_name;        //字符串 是   商户全称（同营业执照）
     private String merchant_short_name;        //字符串 是   商户简称
+    
+    /**
+     * is_cert 是否有证0:否 1：是 ，如果填0，license_no 字符串 是 营业执照号 
+        license_expire_dt 字符串 否 执照有效期 
+        wx_industry_id 字符串 否 微信商户类别 
+        ali_industry_id 字符串 否 支付宝商户类别 
+                    可以不填
+     */
     private String is_cert;        // 字符串 是   是否有证
     private String license_no;        //  字符串 是   营业执照号
     private String license_expire_dt;        //   字符串 否   执照有效期

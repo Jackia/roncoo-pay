@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.roncoo.pay.common.core.enums.PayWayEnum;
@@ -42,24 +43,54 @@ import com.roncoo.pay.trade.service.RpTradePaymentManagerService;
 import com.roncoo.pay.trade.utils.WeiXinPayUtils;
 import com.roncoo.pay.trade.utils.alipay.util.AliPayUtil;
 import com.roncoo.pay.trade.vo.OrderPayResultVo;
+import com.roncoo.xinzhongli.PageData;
 
 @Controller
 @RequestMapping(value = "/scanPayNotify")
-public class ScanPayNotifyController {
+public class ScanPayNotifyController extends BaseController3{
 
     @Autowired
     private RpTradePaymentManagerService rpTradePaymentManagerService;
 
-    @RequestMapping("/notify/{payWayCode}")
+//    @RequestMapping(value="/notify/{payWayCode}",produces = "application/json;charset=utf-8")
+//    public void notify(@PathVariable("payWayCode") String  payWayCode , HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse,@RequestBody PageData pageData) throws Exception {
+//
+//        Map<String , String> notifyMap = new HashMap<String , String >();
+//        if (PayWayEnum.WEIXIN.name().equals(payWayCode)){
+//            InputStream inputStream = httpServletRequest.getInputStream();// 从request中取得输入流
+//            notifyMap = WeiXinPayUtils.parseXml(inputStream);
+//        }else if (PayWayEnum.ALIPAY.name().equals(payWayCode)){
+//            Map<String, String[]> requestParams = httpServletRequest.getParameterMap();
+//            notifyMap = AliPayUtil.parseNotifyMsg(requestParams);
+//        }
+//
+//        String completeWeiXinScanPay = rpTradePaymentManagerService.completeScanPay(payWayCode ,notifyMap);
+//        if (!StringUtil.isEmpty(completeWeiXinScanPay)){
+//            if (PayWayEnum.WEIXIN.name().equals(payWayCode)){
+//                httpServletResponse.setContentType("text/xml");
+//            }
+//            httpServletResponse.getWriter().print(completeWeiXinScanPay);
+//        }
+//    }
+    
+    @RequestMapping(value="/notify/{payWayCode}",produces = "application/json;charset=utf-8")
     public void notify(@PathVariable("payWayCode") String  payWayCode , HttpServletRequest httpServletRequest , HttpServletResponse httpServletResponse) throws Exception {
 
         Map<String , String> notifyMap = new HashMap<String , String >();
+        
+        PageData pageData = null;
+        
         if (PayWayEnum.WEIXIN.name().equals(payWayCode)){
             InputStream inputStream = httpServletRequest.getInputStream();// 从request中取得输入流
             notifyMap = WeiXinPayUtils.parseXml(inputStream);
         }else if (PayWayEnum.ALIPAY.name().equals(payWayCode)){
             Map<String, String[]> requestParams = httpServletRequest.getParameterMap();
             notifyMap = AliPayUtil.parseNotifyMsg(requestParams);
+        }else if (PayWayEnum.JIMI_WEIXIN.name().equals(payWayCode)){
+            Map<String, String[]> requestParams = httpServletRequest.getParameterMap();
+            pageData = new PageData(httpServletRequest);
+            
+            notifyMap = pageData;
         }
 
         String completeWeiXinScanPay = rpTradePaymentManagerService.completeScanPay(payWayCode ,notifyMap);
